@@ -1,880 +1,741 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Activity 02 - JSON</title>
-  <meta name="description" content="Meet cats looking for a loving home at Purrfect Home.">
-
-  <!-- Bootstrap 5.3.8 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <style>
-    :root {
-      --cream: #fffaf2;
-      --cream-deep: #f6ecdd;
-      --brown: #563d2d;
-      --brown-soft: #80634e;
-      --orange: #c87543;
-      --orange-dark: #a85a2e;
-      --sage: #74856a;
-      --ink: #342a24;
-    }
-
-    * {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: var(--cream);
-      color: var(--ink);
-      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-    }
-
-    .navbar {
-      background: rgba(255, 250, 242, .96);
-    }
-
-    .navbar-brand {
-      color: var(--brown);
-      font-weight: 800;
-      letter-spacing: -.04em;
-    }
-
-    .brand-paw {
-      color: var(--orange);
-    }
-
-    .nav-link {
-      color: var(--brown-soft);
-      font-weight: 600;
-    }
-
-    .nav-link:hover,
-    .nav-link:focus {
-      color: var(--orange-dark);
-    }
-
-    .btn-purr {
-      background: var(--orange);
-      border-color: var(--orange);
-      color: #fff;
-      font-weight: 700;
-    }
-
-    .btn-purr:hover,
-    .btn-purr:focus {
-      background: var(--orange-dark);
-      border-color: var(--orange-dark);
-      color: #fff;
-    }
-
-    .btn-outline-purr {
-      color: var(--brown);
-      border-color: #cdb8a5;
-      font-weight: 650;
-    }
-
-    .btn-outline-purr:hover {
-      background: var(--brown);
-      border-color: var(--brown);
-      color: white;
-    }
-
-    .hero {
-      overflow: hidden;
-      background: linear-gradient(115deg, #fffaf2 0%, #f6ecdd 100%);
-    }
-
-    .hero-kicker {
-      color: var(--orange-dark);
-      font-weight: 800;
-      font-size: .78rem;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
-
-    .hero h1 {
-      color: var(--brown);
-      font-weight: 850;
-      letter-spacing: -.055em;
-      line-height: 1.04;
-    }
-
-    .hero h1 span {
-      color: var(--orange);
-    }
-
-    .hero-copy {
-      color: var(--brown-soft);
-      max-width: 560px;
-    }
-
-    .hero-art {
-      min-height: 340px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .hero-cat {
-      width: min(100%, 430px);
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      border-radius: 48% 48% 24px 24px;
-      box-shadow: 0 24px 60px #563d2d1c;
-    }
-
-    .section-kicker {
-      color: var(--orange-dark);
-      font-size: .76rem;
-      font-weight: 800;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-    }
-
-    .section-title {
-      color: var(--brown);
-      font-weight: 850;
-      letter-spacing: -.04em;
-    }
-
-    .muted-copy {
-      color: var(--brown-soft);
-    }
-
-    .cat-card {
-      height: 100%;
-      border: 1px solid #eee1d2;
-      border-radius: 1.25rem;
-      overflow: hidden;
-      background: #fffdf9;
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
-
-    .cat-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 35px #563d2d12;
-    }
-
-    .cat-photo {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      background: var(--cream-deep);
-    }
-
-    .cat-card .card-body {
-      padding: 1.2rem;
-    }
-
-    .cat-name {
-      color: var(--brown);
-      font-weight: 800;
-    }
-
-    .cat-meta {
-      color: var(--brown-soft);
-      font-size: .92rem;
-    }
-
-    .status-badge {
-      font-size: .72rem;
-      font-weight: 800;
-      letter-spacing: .02em;
-    }
-
-    .status-available {
-      background: #e3efdc;
-      color: #36552d;
-    }
-
-    .status-pending {
-      background: #fff0ce;
-      color: #795314;
-    }
-
-    .status-adopted {
-      background: #e9e1f6;
-      color: #59417e;
-    }
-
-    .trait {
-      display: inline-block;
-      background: #f5ecdf;
-      color: #6c503b;
-      border-radius: 999px;
-      padding: .28rem .6rem;
-      font-size: .75rem;
-      margin: .1rem .1rem .1rem 0;
-    }
-
-    .filter-panel {
-      background: #fffdf9;
-      border: 1px solid #eee1d2;
-      border-radius: 1rem;
-    }
-
-    .form-label {
-      color: var(--brown);
-      font-weight: 700;
-      font-size: .88rem;
-    }
-
-    .form-control,
-    .form-select {
-      border-color: #dfcdbb;
-      border-radius: .75rem;
-      min-height: 46px;
-    }
-
-    .form-control:focus,
-    .form-select:focus {
-      border-color: var(--orange);
-      box-shadow: 0 0 0 .2rem #c8754320;
-    }
-
-    .search-button {
-      min-height: 46px;
-      border-radius: .75rem;
-      white-space: nowrap;
-    }
-
-    .guide-section {
-      background: var(--cream-deep);
-    }
-
-    .step-card {
-      height: 100%;
-      padding: 1.5rem;
-      border-radius: 1.1rem;
-      background: #fffaf2;
-      border: 1px solid #eadbc9;
-    }
-
-    .step-number {
-      display: inline-grid;
-      place-items: center;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: var(--brown);
-      color: white;
-      font-weight: 800;
-    }
-
-    .about-band {
-      background: var(--brown);
-      color: #fffaf2;
-      border-radius: 1.5rem;
-    }
-
-    .about-band p {
-      color: #e8d8c8;
-    }
-
-    footer {
-      background: #342a24;
-      color: #f9eee1;
-    }
-
-    footer a {
-      color: #f9d2b3;
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    .modal-content {
-      border: 0;
-      border-radius: 1.25rem;
-      overflow: hidden;
-    }
-
-    .modal-header {
-      background: var(--cream);
-      border-bottom-color: #eee1d2;
-    }
-
-    .modal-title {
-      color: var(--brown);
-      font-weight: 850;
-    }
-
-    .detail-label {
-      color: var(--brown-soft);
-      font-size: .8rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .07em;
-    }
-
-    .empty-state {
-      background: #fffdf9;
-      border: 1px dashed #d9c4ae;
-      border-radius: 1rem;
-    }
-
-    @media (max-width: 767.98px) {
-      .hero {
-        text-align: center;
-      }
-
-      .hero-copy {
-        margin-inline: auto;
-      }
-
-      .hero-art {
-        min-height: 260px;
-      }
-
-      .hero-cat {
-        max-width: 310px;
-      }
-
-      .cat-photo {
-        height: 230px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        scroll-behavior: auto !important;
-        transition: none !important;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg sticky-top border-bottom border-light-subtle">
-    <div class="container py-2">
-      <a class="navbar-brand fs-4" href="#home">
-        <span class="brand-paw">♥</span> Purrfect Home
-      </a>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-        data-bs-target="#mainNav" aria-controls="mainNav"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="mainNav">
-        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#cats">Meet the Cats</a></li>
-          <li class="nav-item"><a class="nav-link" href="#adoption-guide">Adoption Guide</a></li>
-          <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
-          <li class="nav-item ms-lg-2">
-            <a class="btn btn-purr rounded-pill px-4 mt-2 mt-lg-0" href="#cats">Find a Cat</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <main>
-
-    <!-- Hero -->
-    <section class="hero" id="home">
-      <div class="container py-5">
-        <div class="row align-items-center g-4 py-lg-3">
-
-          <div class="col-lg-6 py-3">
-            <p class="hero-kicker mb-3">A little love goes a long way</p>
-
-            <h1 class="display-2 mb-4">
-              Find your <span>purrfect</span> companion.
-            </h1>
-
-            <p class="hero-copy fs-5 mb-4">
-              Every cat has a story, a personality, and a little space in their heart just for you.
-              Meet your future best friend and help them find a loving home.
-            </p>
-
-            <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
-              <a class="btn btn-purr btn-lg rounded-pill px-4" href="#cats">
-                Meet the Cats <span aria-hidden="true">→</span>
-              </a>
-
-              <a class="btn btn-outline-purr btn-lg rounded-pill px-4" href="#adoption-guide">
-                How Adoption Works
-              </a>
-            </div>
-
-            <div class="d-flex gap-4 mt-4 justify-content-center justify-content-lg-start">
-              <div>
-                <div class="fw-bold fs-4" style="color:var(--brown)">Kindness</div>
-                <div class="small muted-copy">Starts at home</div>
-              </div>
-
-              <div>
-                <div class="fw-bold fs-4" style="color:var(--brown)">Care</div>
-                <div class="small muted-copy">For every paw</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="hero-art">
-              <img class="hero-cat"
-                src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=1000&q=85"
-                alt="A cat looking calmly toward the camera">
-            </div>
-          </div>
-
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Activity 02 - JSON | Purrfect Home</title>
+    <meta
+      name="description"
+      content="Meet the cats at Purrfect Home and discover your feline companion."
+    />
+<!-- Light Browser Tabs -->
+<link rel="icon" href="assets/icon-light.png" media="(prefers-color-scheme: light)" />
+
+<!--Dark Browser Tabs -->
+<link rel="icon" href="assets/icon-dark.png" media="(prefers-color-scheme: dark)" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/style.css" />
+
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container py-1">
+        <a class="navbar-brand fs-4" href="#home">
+          <img 
+            src="assets/icon-light.png" 
+            alt="Purrfect Home Logo" 
+            width="32" 
+            height="32" 
+            class="d-inline-block align-text-top"
+          >
+          Purrfect Home
+        </a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNav"
+          aria-controls="mainNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+          <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+            <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="#adoption-guide">Adoption Guide</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About Us</a>
+            </li>
+            <li class="nav-item ms-lg-2">
+              <a
+                class="btn btn-purr rounded-pill px-4 mt-2 mt-lg-0"
+                href="#cats"
+                >Find a Cat</a
+              >
+            </li>
+          </ul>
         </div>
       </div>
-    </section>
+    </nav>
 
-    <!-- Cat gallery -->
-    <section class="container py-5" id="cats">
+    <main>
+      <!-- Hero section -->
+      <section class="hero" id="home">
+        <div class="container py-5">
+          <div class="row align-items-center g-4 py-lg-4">
+            <div class="col-lg-6 py-3">
+              <span class="hero-pill glass mb-3"
+                >🐾 A little love goes a long way</span
+              >
 
-      <div class="text-center mb-4 mb-lg-5">
-        <p class="section-kicker mb-2">Meet your new best friend</p>
-        <h2 class="section-title display-5 mb-3">Cats looking for love</h2>
-        <p class="muted-copy mx-auto mb-0" style="max-width:620px">
-          Every cat is different. Browse their profiles, learn about their personalities,
-          and find the one who feels right for your home.
-        </p>
-      </div>
+              <h1 class="display-3 mb-4">Find your purrfect companion.</h1>
 
-      <!-- Search and filters -->
-      <div class="filter-panel p-3 p-lg-4 mb-4">
-        <form id="searchForm">
-          <div class="row g-3 align-items-end">
+              <p class="hero-copy fs-5 mb-4">
+                Every cat has a story, a personality, and a little space in
+                their heart just for you. Meet your future best friend and help
+                them find a loving home.
+              </p>
 
-            <div class="col-12 col-lg-4">
-              <label for="searchInput" class="form-label">Search by name or breed</label>
-
-              <input type="search" class="form-control" id="searchInput"
-                placeholder="Try Mochi or Tabby" autocomplete="off">
+              <div
+                class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start"
+              >
+                <a class="btn btn-purr btn-lg rounded-pill px-4" href="#cats"
+                  >Find a Cat</a
+                >
+                <a
+                  class="btn btn-outline-purr btn-lg rounded-pill px-4"
+                  href="#adoption-guide"
+                  >How Adoption Works</a
+                >
+              </div>
             </div>
 
-            <div class="col-12 col-sm-6 col-lg-2 d-grid">
-              <button type="submit" class="btn btn-purr search-button">
-                Search
-              </button>
+            <div class="col-lg-6">
+              <div class="hero-art">
+                <div class="hero-frame glass">
+                  <img
+                    class="hero-cat"
+                    src="assets/hero.jpg"
+                    alt="A cat looking calmly toward the camera"
+                    onerror="this.onerror=null;this.src='https://placehold.co/800x800/0d2347/cfe0ff?text=Cat+Photo';"
+                  />
+                </div>
+              </div>
             </div>
-
-            <div class="col-6 col-lg-2">
-              <label for="ageFilter" class="form-label">Age group</label>
-              <select class="form-select" id="ageFilter">
-                <option value="all">All ages</option>
-                <option value="Kitten">Kitten</option>
-                <option value="Young Adult">Young Adult</option>
-                <option value="Adult">Adult</option>
-              </select>
-            </div>
-
-            <div class="col-6 col-lg-2">
-              <label for="genderFilter" class="form-label">Gender</label>
-              <select class="form-select" id="genderFilter">
-                <option value="all">All genders</option>
-                <option value="Female">Female</option>
-                <option value="Male">Male</option>
-              </select>
-            </div>
-
-            <div class="col-6 col-lg-2">
-              <label for="statusFilter" class="form-label">Adoption status</label>
-              <select class="form-select" id="statusFilter">
-                <option value="all">All statuses</option>
-                <option value="Available">Available</option>
-                <option value="Pending">Pending</option>
-                <option value="Adopted">Adopted</option>
-              </select>
-            </div>
-
-            <div class="col-6 col-lg-2 d-grid">
-              <button type="button" class="btn btn-outline-purr search-button" id="resetFilters">
-                Reset filters
-              </button>
-            </div>
-
           </div>
-        </form>
-      </div>
+        </div>
+      </section>
 
-      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-        <p class="muted-copy mb-0" id="resultsCount" aria-live="polite">Loading cats...</p>
-        <span class="small muted-copy">Choose “View Details” to learn more.</span>
-      </div>
+      <!-- JavaScript calculates these values from the cats array. -->
+      <section class="container pt-3 pb-4" aria-label="Cat adoption statistics">
+        <div class="row g-3">
+          <div class="col-6 col-lg-3">
+            <div class="stat-card glass">
+              <div class="stat-number" id="totalCats">0</div>
+              <div class="stat-label">Total Cats</div>
+            </div>
+          </div>
 
-      <div class="row g-4" id="catContainer">
-        <!-- Cat cards are generated from the internal cats array. -->
-      </div>
+          <div class="col-6 col-lg-3">
+            <div class="stat-card glass">
+              <div class="stat-number" id="availableCats">0</div>
+              <div class="stat-label">Available</div>
+            </div>
+          </div>
 
-      <div class="empty-state text-center p-5 mt-3 d-none" id="emptyState">
-        <div class="display-5 mb-2" aria-hidden="true">🐾</div>
-        <h3 class="h4" style="color:var(--brown)">No cats found</h3>
-        <p class="muted-copy mb-3">Try a different search or reset your filters.</p>
-        <button type="button" class="btn btn-purr rounded-pill px-4" id="emptyReset">
-          Show all cats
-        </button>
-      </div>
+          <div class="col-6 col-lg-3">
+            <div class="stat-card glass">
+              <div class="stat-number" id="pendingCats">0</div>
+              <div class="stat-label">Pending</div>
+            </div>
+          </div>
 
-    </section>
+          <div class="col-6 col-lg-3">
+            <div class="stat-card glass">
+              <div class="stat-number" id="adoptedCats">0</div>
+              <div class="stat-label">Adopted</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <!-- Adoption guide -->
-    <section class="guide-section py-5" id="adoption-guide">
-      <div class="container py-3">
-
-        <div class="text-center mb-5">
-          <p class="section-kicker mb-2">A home full of love</p>
-          <h2 class="section-title display-5 mb-3">How adoption works</h2>
-          <p class="muted-copy mx-auto mb-0" style="max-width:600px">
-            Adoption is a commitment. Take your time and make sure you and your future companion
-            are ready for each other.
+      <!-- Cat gallery -->
+      <section class="container py-5" id="cats">
+        <div class="text-center mb-4 mb-lg-5">
+          <h2 class="section-title display-5 mb-3">Cats looking for love</h2>
+          <p class="muted-copy mx-auto mb-0" style="max-width: 620px">
+            Browse the profiles, learn about each cat's personality, and find
+            the one who feels right for your home.
           </p>
         </div>
 
-        <div class="row g-4">
+        <!-- Search and filter form -->
+        <div class="filter-panel glass p-3 p-lg-4 mb-4">
+          <form id="searchForm">
+            <div class="row g-3 align-items-end">
+              <div class="col-12 col-lg-5">
+                <label for="searchInput" class="form-label"
+                  >Search by breed or color</label
+                >
 
-          <div class="col-md-4">
-            <article class="step-card">
-              <span class="step-number mb-3">1</span>
-              <h3 class="h5 fw-bold">Get to know them</h3>
-              <p class="muted-copy mb-0">
-                Browse the cat profiles and read about each cat's age, personality, and needs.
-              </p>
-            </article>
-          </div>
+                <div class="input-group search-group">
+                  <input
+                    type="search"
+                    class="form-control"
+                    id="searchInput"
+                    placeholder="Try Domestic Longhair"
+                    autocomplete="off"
+                  />
 
-          <div class="col-md-4">
-            <article class="step-card">
-              <span class="step-number mb-3">2</span>
-              <h3 class="h5 fw-bold">Prepare your home</h3>
-              <p class="muted-copy mb-0">
-                Plan for food, litter, a safe resting place, veterinary care, and time together.
-              </p>
-            </article>
-          </div>
+                  <!-- Clicking Search or pressing Enter submits this form. -->
+                  <button type="submit" class="btn btn-purr search-button">
+                    Search
+                  </button>
+                </div>
+              </div>
 
-          <div class="col-md-4">
-            <article class="step-card">
-              <span class="step-number mb-3">3</span>
-              <h3 class="h5 fw-bold">Ask about adoption</h3>
-              <p class="muted-copy mb-0">
-                Contact a real shelter or rescue organization to learn about its application
-                and adoption process.
-              </p>
-            </article>
-          </div>
+              <div class="col-12 col-sm-4 col-lg-2">
+                <label for="ageFilter" class="form-label">Age group</label>
+                <select class="form-select" id="ageFilter">
+                  <option value="all">All ages</option>
+                  <option value="Kitten">Kitten</option>
+                  <option value="Young Adult">Young Adult</option>
+                  <option value="Adult">Adult</option>
+                </select>
+              </div>
 
+              <div class="col-6 col-sm-4 col-lg-2">
+                <label for="genderFilter" class="form-label">Gender</label>
+                <select class="form-select" id="genderFilter">
+                  <option value="all">All genders</option>
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
+                </select>
+              </div>
+
+              <div class="col-6 col-sm-4 col-lg-3">
+                <label for="statusFilter" class="form-label"
+                  >Adoption status</label
+                >
+                <select class="form-select" id="statusFilter">
+                  <option value="all">All statuses</option>
+                  <option value="Available">Available</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Adopted">Adopted</option>
+                </select>
+              </div>
+
+              <div class="col-12 d-flex flex-wrap align-items-center gap-2">
+                <button
+                  type="button"
+                  class="btn btn-outline-purr rounded-pill px-4"
+                  id="resetFilters"
+                >
+                  Reset Filters
+                </button>
+
+                <span class="small muted-copy">
+                  Search and filters can be used together.
+                </span>
+              </div>
+            </div>
+          </form>
         </div>
-      </div>
-    </section>
 
-    <!-- About -->
-    <section class="container py-5" id="about">
-      <div class="about-band p-4 p-lg-5">
-        <div class="row align-items-center g-4">
+        <div
+          class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3"
+        >
+          <p class="muted-copy mb-0" id="resultsCount" aria-live="polite">
+            Loading cats...
+          </p>
+          <span class="small muted-copy"
+            >Select View Details to learn more.</span
+          >
+        </div>
 
-          <div class="col-lg-8">
-            <p class="text-uppercase small fw-bold mb-2"
-              style="letter-spacing:.14em;color:#f3bd94">
-              A kinder world, one cat at a time
-            </p>
+        <!-- JS generates the cat cards inside this row. -->
+        <div class="row g-4" id="catContainer"></div>
 
-            <h2 class="display-6 fw-bold mb-3">
-              Every paw deserves a place to belong.
-            </h2>
+        <!-- Displayed when no cat matches the search or filters. -->
+        <div
+          class="empty-state glass text-center p-5 mt-3 d-none"
+          id="emptyState"
+        >
+          <div class="display-5 mb-2" aria-hidden="true">🐾</div>
+          <h3 class="h4">No cats found</h3>
+          <p class="muted-copy mb-3">
+            Try another search or reset the filters.
+          </p>
 
-            <p class="mb-0">
-              Purrfect Home is a student website concept created to introduce adoptable cats
-              and encourage responsible pet ownership. The profiles shown here are sample data
-              for demonstration, not live shelter listings.
+          <button
+            type="button"
+            class="btn btn-purr rounded-pill px-4"
+            id="emptyReset"
+          >
+            Show All Cats
+          </button>
+        </div>
+      </section>
+
+      <!-- Adoption guide -->
+      <section class="container py-4" id="adoption-guide">
+        <div class="guide-wrap glass on-dark p-4 p-lg-5">
+          <div class="text-center mb-5">
+            <p class="text-uppercase small fw-bold mb-2">A home full of love</p>
+            <h2 class="section-title display-5 mb-3">How Adoption Works</h2>
+            <p class="muted-copy mx-auto mb-0" style="max-width: 600px">
+              Adoption is a commitment. Take your time and prepare to give your
+              future companion a safe and caring home.
             </p>
           </div>
 
-          <div class="col-lg-4 text-lg-end">
-            <a href="#cats" class="btn btn-light btn-lg rounded-pill px-4 fw-bold"
-              style="color:var(--brown)">
-              Explore the Cats
+          <div class="row g-4">
+            <div class="col-md-4">
+              <article class="step-card">
+                <span class="step-number mb-3">1</span>
+                <h3 class="h5 fw-bold">Find Your Match</h3>
+                <p class="muted-copy mb-0">
+                  Browse the available cat profiles and use the search and
+                  filters to find a cat that fits your preferences.
+                </p>
+              </article>
+            </div>
+
+            <div class="col-md-4">
+              <article class="step-card">
+                <span class="step-number mb-3">2</span>
+                <h3 class="h5 fw-bold">View Cat Details</h3>
+                <p class="muted-copy mb-0">
+                  Click View Details to learn more about your chosen cat,
+                  including its description, health information, and shelter
+                  contact details.
+                </p>
+              </article>
+            </div>
+
+            <div class="col-md-4">
+              <article class="step-card">
+                <span class="step-number mb-3">3</span>
+                <h3 class="h5 fw-bold">Contact the Shelter</h3>
+                <p class="muted-copy mb-0">
+                  Contact the shelter using the information provided to confirm
+                  that the cat is still available and ask if you can reserve it.
+                  Confirm the adoption requirements and arrange your visit
+                  before going to the shelter.
+                </p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+<!-- About section -->
+<section class="container py-4" id="about">
+  <div class="about-band glass on-dark p-4 p-lg-5">
+    <div class="row align-items-center g-4">
+
+      <div class="col-lg-8">
+        <h2 class="display-6 fw-bold mb-3">
+          Every Paw Deserves a Place to Belong.
+        </h2>
+
+        <p class="muted-copy mb-4">
+          Purrfect Home is a platform where animal shelters can showcase
+          cats available for adoption. It helps people browse cat
+          profiles, learn about their personalities and needs, and prepare
+          before visiting the respective shelter. By viewing the available
+          listings in advance, potential adopters can make more informed
+          decisions and contact the shelter for further details.
+        </p>
+
+        <h3 class="h5 fw-bold mb-2">
+          Want to List a Cat for Adoption?
+        </h3>
+
+        <p class="muted-copy mb-3">
+          Are you an animal shelter, rescuer, or someone who can no longer
+          care for a cat? You can contact the website administrator to
+          inquire about featuring your cat on Purrfect Home and helping
+          it find a loving home.
+        </p>
+
+        <div class="d-flex flex-column gap-2">
+          <div>
+            <i class="bi bi-envelope-fill me-2"></i>
+            <strong>Email:</strong>
+            <a
+              href="mailto:gracearingogutierrez@gmail.com"
+              class="link-light"
+            >
+              gracearingogutierrez@gmail.com
             </a>
           </div>
 
+          <div>
+            <i class="bi bi-telephone-fill me-2"></i>
+            <strong>Contact Number:</strong>
+            <a href="tel:095464075589" class="link-light">
+              095464075589
+            </a>
+          </div>
         </div>
       </div>
-    </section>
 
-  </main>
+<div class="col-lg-4 about-img-col d-flex align-items-end justify-content-center justify-content-lg-end">
+<img
+  src="assets/about.png"
+  alt="A cat waiting for a loving home"
+  class="img-fluid"
+  style="width: 500px; max-width: 140%; height: auto; transform: translateX(110px);"
+  loading="lazy"
+>
+</div>
 
-  <!-- Footer -->
-  <footer class="py-4">
-    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
-      <a class="fw-bold fs-5" href="#home">♥ Purrfect Home</a>
-      <p class="small mb-0 text-center">A classroom project made with care. Sample profiles only.</p>
-      <a class="small" href="#home">Back to top ↑</a>
-    </div>
-  </footer>
 
-  <!-- Cat details modal -->
-  <div class="modal fade" id="catDetailsModal" tabindex="-1"
-    aria-labelledby="modalCatName" aria-hidden="true">
-
-    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-      <div class="modal-content">
-
-        <div class="modal-header px-4 py-3">
-          <h2 class="modal-title fs-4" id="modalCatName">Cat details</h2>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <div class="modal-body p-4" id="modalCatBody">
-          <!-- Selected cat details are inserted here. -->
-        </div>
-
-        <div class="modal-footer border-0 px-4 pb-4">
-          <button type="button" class="btn btn-outline-purr rounded-pill px-4"
-            data-bs-dismiss="modal">
-            Close
-          </button>
-        </div>
-
-      </div>
     </div>
   </div>
+</section>
 
-  <!-- Bootstrap JavaScript bundle -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    </main>
 
-  <!-- Website JavaScript -->
-  <script>
-    // Internal sample data for the cat profiles.
-    var cats = [
-      {
-        id: 1,
-        name: "Mochi",
-        age: 3,
-        gender: "Female",
-        breed: "Domestic Shorthair",
-        color: "Calico",
-        personality: ["Playful", "Affectionate", "Curious"],
-        description: "Mochi is a curious little kitten who loves playtime, gentle attention, and exploring new corners. She would suit a home ready to give a young cat plenty of patience and care.",
-        healthStatus: "Sample record: vaccinated",
-        isSpayedNeutered: false,
-        status: "Available",
-        image: "https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=900&q=80",
-        imageAlt: "Cat looking toward the camera"
-      },
-      {
-        id: 2,
-        name: "Simba",
-        age: 18,
-        gender: "Male",
-        breed: "Domestic Shorthair",
-        color: "Orange Tabby",
-        personality: ["Friendly", "Curious", "Sociable"],
-        description: "Simba is an outgoing young adult who likes being near people and investigating his surroundings. He may be a lovely match for someone who enjoys an engaged, companionable cat.",
-        healthStatus: "Sample record: wellness check completed",
-        isSpayedNeutered: true,
-        status: "Available",
-        image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=900&q=80",
-        imageAlt: "Orange and white cat portrait"
-      },
-      {
-        id: 3,
-        name: "Luna",
-        age: 30,
-        gender: "Female",
-        breed: "Domestic Mediumhair",
-        color: "Gray and White",
-        personality: ["Gentle", "Quiet", "Observant"],
-        description: "Luna is a gentle young adult who enjoys calm spaces and a cozy place to nap. Give her time to settle in and let her show you her personality at her own pace.",
-        healthStatus: "Sample record: veterinary assessment pending",
-        isSpayedNeutered: false,
-        status: "Pending",
-        image: "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&w=900&q=80",
-        imageAlt: "Gray cat sitting calmly"
-      },
-      {
-        id: 4,
-        name: "Pepper",
-        age: 48,
-        gender: "Male",
-        breed: "Domestic Shorthair",
-        color: "Black",
-        personality: ["Laid-back", "Loyal", "Gentle"],
-        description: "Pepper is a mature cat with a relaxed presence. He may be happiest in a comfortable home where he can enjoy predictable routines, soft resting spots, and kind company.",
-        healthStatus: "Sample record: vaccinated",
-        isSpayedNeutered: true,
-        status: "Available",
-        image: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=900&q=80",
-        imageAlt: "Black and white cat outdoors"
-      },
-      {
-        id: 5,
-        name: "Cleo",
-        age: 8,
-        gender: "Female",
-        breed: "Domestic Shorthair",
-        color: "Tortoiseshell",
-        personality: ["Energetic", "Playful", "Bright"],
-        description: "Cleo is a lively kitten who enjoys toys and interactive play. A home prepared for kitten energy and ongoing socialization could help her grow into a confident companion.",
-        healthStatus: "Sample record: vaccination schedule in progress",
-        isSpayedNeutered: false,
-        status: "Available",
-        image: "https://images.unsplash.com/photo-1513360371669-4adf3dd7dff8?auto=format&fit=crop&w=900&q=80",
-        imageAlt: "Small cat sitting indoors"
-      },
-      {
-        id: 6,
-        name: "Oliver",
-        age: 60,
-        gender: "Male",
-        breed: "Domestic Longhair",
-        color: "Cream and Ginger",
-        personality: ["Affectionate", "Calm", "People-friendly"],
-        description: "Oliver is a settled adult who appreciates gentle company and a peaceful place to rest. He has been marked as adopted in this sample listing to demonstrate the website's status filter.",
-        healthStatus: "Sample record: veterinary details should be confirmed with a shelter",
-        isSpayedNeutered: true,
-        status: "Adopted",
-        image: "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&w=900&q=80",
-        imageAlt: "Cat with bright eyes"
-      },
-      {
-        id: 7,
-        name: "Nori",
-        age: 11,
-        gender: "Male",
-        breed: "Domestic Shorthair",
-        color: "Gray Tabby",
-        personality: ["Sweet", "Inquisitive", "Playful"],
-        description: "Nori is an inquisitive kitten who enjoys discovering new toys and familiarizing himself with people. He needs a safe environment and a family ready for kitten care.",
-        healthStatus: "Sample record: wellness check completed",
-        isSpayedNeutered: false,
-        status: "Pending",
-        image: "https://images.unsplash.com/photo-1519052537078-e6302a4968d4?auto=format&fit=crop&w=900&q=80",
-        imageAlt: "Tabby cat resting"
-      },
-      {
-        id: 8,
-        name: "Daisy",
-        age: 36,
-        gender: "Female",
-        breed: "Domestic Shorthair",
-        color: "White and Gray",
-        personality: ["Independent", "Gentle", "Curious"],
-        description: "Daisy is an adult cat with an independent streak and a gentle side. She may do best with adopters who respect her space while building trust through a steady routine.",
-        healthStatus: "Sample record: vaccinated",
-        isSpayedNeutered: true,
-        status: "Available",
-        image: "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&w=900&q=80",
-        imageAlt: "Gray and white cat portrait"
+    <!-- Footer -->
+    <footer class="py-4">
+      <div
+        class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2"
+      >
+                <a class="navbar-brand fs-4 text-white" href="#home">
+          <img 
+            src="assets/icon-dark.png" 
+            alt="Purrfect Home Logo" 
+            width="32" 
+            height="32" 
+            class="d-inline-block align-text-top"
+          >
+          Purrfect Home
+        </a>
+        <a class="small" href="#home">Back to Top ↑</a>
+      </div>
+    </footer>
+
+    <!-- Modal shell: JavaScript fills its contents when a cat is selected. -->
+    <div
+      class="modal fade"
+      id="catDetailsModal"
+      tabindex="-1"
+      aria-labelledby="modalCatName"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable"
+      >
+        <div class="modal-content">
+          <div class="modal-header px-4 py-3">
+            <h2 class="modal-title fs-4" id="modalCatName">Cat Details</h2>
+
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body p-4" id="modalCatBody">
+            <!-- details appear here. -->
+          </div>
+
+          <div class="modal-footer border-0 px-4 pb-4">
+            <button
+              type="button"
+              class="btn btn-outline-purr rounded-pill px-4"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      var cats = [
+        {
+          id: 1,
+          name: "Mochi",
+          age: 3,
+          gender: "Female",
+          breed: "Domestic Shorthair",
+          color: "Calico",
+          personality: ["Playful", "Affectionate", "Curious"],
+          description:
+            "Mochi is a curious little kitten who loves playtime, gentle attention, and exploring new corners. She needs a home ready to give a young cat patience and care.",
+          healthStatus: "vaccinated",
+          isSpayedNeutered: false,
+          shelter: "Animal Shelter",
+          shelterContact: "0912-345-6789",
+          status: "Available",
+          image: "assets/cat1.jpg",
+          imageAlt: "Mochi, a cat looking toward the camera",
+        },
+        {
+          id: 2,
+          name: "Simba",
+          age: 18,
+          gender: "Male",
+          breed: "Domestic Shorthair",
+          color: "Orange Tabby",
+          personality: ["Friendly", "Curious", "Sociable"],
+          description:
+            "Simba is an outgoing young adult who likes being near people and investigating his surroundings. He may suit a home that enjoys an active, companionable cat.",
+          healthStatus: "wellness check completed",
+          isSpayedNeutered: true,
+          shelter: "Animal Shelter",
+shelterContact: "0912-345-6789",
+          status: "Available",
+          image: "assets/cat2.jpg",
+          imageAlt: "Simba, an orange and white cat",
+        },
+        {
+          id: 3,
+          name: "Luna",
+          age: 30,
+          gender: "Female",
+          breed: "Domestic Mediumhair",
+          color: "Gray and White",
+          personality: ["Gentle", "Quiet", "Observant"],
+          description:
+            "Luna is a gentle young adult who enjoys calm spaces and a cozy place to nap. Give her time to settle in and show her personality at her own pace.",
+          healthStatus: "veterinary assessment pending",
+          isSpayedNeutered: false,
+          shelter: "Animal Shelter",
+shelterContact: "0912-345-6789",
+          status: "Pending",
+          image: "assets/cat3.jpg",
+          imageAlt: "Luna, a gray and white cat",
+        },
+        {
+          id: 4,
+          name: "Pepper",
+          age: 48,
+          gender: "Male",
+          breed: "Domestic Shorthair",
+          color: "Black",
+          personality: ["Laid-back", "Loyal", "Gentle"],
+          description:
+            "Pepper is a mature cat with a relaxed presence. He may be happiest in a comfortable home with predictable routines, soft resting spots, and kind company.",
+          healthStatus: "vaccinated",
+          isSpayedNeutered: true,
+          shelter: "Animal Shelter",
+shelterContact: "0912-345-6789",
+          status: "Available",
+          image: "assets/cat4.jpg",
+          imageAlt: "Pepper, a black cat",
+        },
+        {
+          id: 5,
+          name: "Cleo",
+          age: 8,
+          gender: "Female",
+          breed: "Domestic Shorthair",
+          color: "Tortoiseshell",
+          personality: ["Energetic", "Playful", "Bright"],
+          description:
+            "Cleo is a lively kitten who enjoys toys and interactive play. She needs a home prepared for kitten energy, socialization, and regular care.",
+          healthStatus: "vaccination schedule in progress",
+          isSpayedNeutered: false,
+          shelter: "Animal Shelter",
+shelterContact: "0912-345-6789",
+          status: "Available",
+          image: "assets/cat5.jpg",
+          imageAlt: "Cleo, a small cat sitting indoors",
+        },
+        {
+          id: 6,
+          name: "Oliver",
+          age: 60,
+          gender: "Male",
+          breed: "Domestic Longhair",
+          color: "Cream and Ginger",
+          personality: ["Affectionate", "Calm", "People-friendly"],
+          description:
+            "Oliver is a settled adult who appreciates gentle company and a peaceful place to rest. This  listing marks him as adopted to demonstrate the status filter.",
+          healthStatus: "confirm veterinary details with a shelter",
+          isSpayedNeutered: true,
+          shelter: "Animal Shelter",
+shelterContact: "0912-345-6789",
+          status: "Adopted",
+          image: "assets/cat6.jpg",
+          imageAlt: "Oliver, a cat with bright eyes",
+        },
+        {
+          id: 7,
+          name: "Nori",
+          age: 3,
+          gender: "Male",
+          breed: "Elf",
+          color: "Gray Tabby",
+          personality: ["Sweet", "Inquisitive", "Playful"],
+          description:
+            "Nori is an inquisitive kitten who enjoys discovering new toys and familiarizing himself with people. He needs a safe environment and a family ready for no fur kitten care.",
+          healthStatus: "wellness check completed",
+          isSpayedNeutered: false,
+          shelter: "Animal Shelter",
+shelterContact: "0912-345-6789",
+          status: "Pending",
+          image: "assets/cat7.jpg",
+          imageAlt: "Nori, a furless cat resting",
+        },
+        {
+          id: 8,
+          name: "Daisy",
+          age: 36,
+          gender: "Female",
+          breed: "Domestic Shorthair",
+          color: "White and Gray",
+          personality: ["Independent", "Gentle", "Curious"],
+          description:
+            "Daisy is an adult cat with an independent streak and a gentle side. She may do best with adopters who respect her space and build trust through a steady routine.",
+          healthStatus: "vaccinated",
+          isSpayedNeutered: true,
+          shelter: "Animal Shelter",
+shelterContact: "0912-345-6789",
+          status: "Available",
+          image: "assets/cat8.jpg",
+          imageAlt: "Daisy, a gray and white cat",
+        },
+      ];
+
+      var elCatContainer = document.getElementById("catContainer");
+      var elSearchInput = document.getElementById("searchInput");
+      var elAgeFilter = document.getElementById("ageFilter");
+      var elGenderFilter = document.getElementById("genderFilter");
+      var elStatusFilter = document.getElementById("statusFilter");
+      var elResultsCount = document.getElementById("resultsCount");
+      var elEmptyState = document.getElementById("emptyState");
+
+      var elTotalCats = document.getElementById("totalCats");
+      var elAvailableCats = document.getElementById("availableCats");
+      var elPendingCats = document.getElementById("pendingCats");
+      var elAdoptedCats = document.getElementById("adoptedCats");
+
+      var elModalCatName = document.getElementById("modalCatName");
+      var elModalCatBody = document.getElementById("modalCatBody");
+
+      var catDetailsModal = null;
+
+      function getAgeCategory(ageInMonths) {
+        if (ageInMonths < 12) {
+          return "Kitten";
+        } else if (ageInMonths <= 35) {
+          return "Young Adult";
+        } else {
+          return "Adult";
+        }
       }
-    ];
 
-    // Convert age in months into an age category.
-    function getAgeCategory(ageInMonths) {
-      if (ageInMonths < 12) {
-        return "Kitten";
-      } else if (ageInMonths <= 35) {
-        return "Young Adult";
-      } else {
-        return "Adult";
-      }
-    }
+      function formatAge(ageInMonths) {
+        if (ageInMonths < 12) {
+          return (
+            ageInMonths + (ageInMonths === 1 ? " month old" : " months old")
+          );
+        }
 
-    // Display ages in a visitor-friendly format.
-    function formatAge(ageInMonths) {
-      if (ageInMonths < 12) {
-        return ageInMonths + (ageInMonths === 1 ? " month old" : " months old");
-      }
+        var years = Math.floor(ageInMonths / 12);
+        var remainingMonths = ageInMonths % 12;
 
-      var years = Math.floor(ageInMonths / 12);
-      var remainingMonths = ageInMonths % 12;
+        if (remainingMonths === 0) {
+          return years + (years === 1 ? " year old" : " years old");
+        }
 
-      if (remainingMonths === 0) {
-        return years + (years === 1 ? " year old" : " years old");
-      }
-
-      return years + (years === 1 ? " year " : " years ") +
-        remainingMonths + " months old";
-    }
-
-    // Give each adoption status its own visual label.
-    function getStatusClass(status) {
-      if (status === "Available") return "status-available";
-      if (status === "Pending") return "status-pending";
-      return "status-adopted";
-    }
-
-    // Get references to the HTML elements.
-    var elCatContainer = document.getElementById("catContainer");
-    var elSearchInput = document.getElementById("searchInput");
-    var elAgeFilter = document.getElementById("ageFilter");
-    var elGenderFilter = document.getElementById("genderFilter");
-    var elStatusFilter = document.getElementById("statusFilter");
-    var elResultsCount = document.getElementById("resultsCount");
-    var elEmptyState = document.getElementById("emptyState");
-    var elModalCatName = document.getElementById("modalCatName");
-    var elModalCatBody = document.getElementById("modalCatBody");
-
-    // Initialize the modal only when Bootstrap JavaScript is available.
-    var catDetailsModal = null;
-
-    function getCatDetailsModal() {
-      if (!window.bootstrap || !window.bootstrap.Modal) {
-        return null;
-      }
-
-      if (catDetailsModal === null) {
-        catDetailsModal = new bootstrap.Modal(
-          document.getElementById("catDetailsModal")
+        return (
+          years +
+          (years === 1 ? " year " : " years ") +
+          remainingMonths +
+          " months old"
         );
       }
 
-      return catDetailsModal;
-    }
+      function getStatusClass(status) {
+        if (status === "Available") {
+          return "status-available";
+        } else if (status === "Pending") {
+          return "status-pending";
+        } else {
+          return "status-adopted";
+        }
+      }
 
-    // Generate a Bootstrap card for each cat object using a for loop.
-    function renderCats(catList) {
-      elCatContainer.innerHTML = "";
-
-      for (var i = 0; i < catList.length; i++) {
-        var cat = catList[i];
+      function createTraitsHTML(personalityList) {
         var traitsHTML = "";
 
-        for (var j = 0; j < cat.personality.length; j++) {
-          traitsHTML += '<span class="trait">' +
-            cat.personality[j] + '</span>';
+        for (var i = 0; i < personalityList.length; i++) {
+          traitsHTML += '<span class="trait">' + personalityList[i] + "</span>";
         }
 
-        elCatContainer.innerHTML += `
-          <div class="col-sm-6 col-lg-4">
-            <article class="card cat-card">
-              <img
-                class="cat-photo"
-                src="${cat.image}"
-                alt="${cat.imageAlt}"
-                loading="lazy"
-                onerror="this.onerror=null;this.src='https://placehold.co/800x600/f6ecdd/563d2d?text=Cat+Photo';"
-              >
+        return traitsHTML;
+      }
+
+      function updateStatistics() {
+        var total = cats.length;
+        var available = 0;
+        var pending = 0;
+        var adopted = 0;
+
+        for (var i = 0; i < cats.length; i++) {
+          if (cats[i].status === "Available") {
+            available++;
+          } else if (cats[i].status === "Pending") {
+            pending++;
+          } else if (cats[i].status === "Adopted") {
+            adopted++;
+          }
+        }
+
+        elTotalCats.textContent = total;
+        elAvailableCats.textContent = available;
+        elPendingCats.textContent = pending;
+        elAdoptedCats.textContent = adopted;
+      }
+
+      function renderCats(catList) {
+        elCatContainer.innerHTML = "";
+
+        for (var i = 0; i < catList.length; i++) {
+          var cat = catList[i];
+
+          var traitsHTML = createTraitsHTML(cat.personality);
+
+          elCatContainer.innerHTML += `
+          <div class="col-sm-6 col-lg-4 col-xl-3">
+            <article class="card cat-card glass">
+
+              <div class="cat-photo-wrap">
+                <img
+                  class="cat-photo"
+                  src="${cat.image}"
+                  alt="${cat.imageAlt}"
+                  loading="lazy"
+                  onerror="this.onerror=null;this.src='https://placehold.co/800x600/0d2347/cfe0ff?text=Cat+Photo';"
+                >
+
+                <span class="badge status-badge ${getStatusClass(cat.status)}">
+                  ${cat.status}
+                </span>
+              </div>
 
               <div class="card-body d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                  <h3 class="h4 cat-name mb-0">${cat.name}</h3>
-                  <span class="badge rounded-pill status-badge ${getStatusClass(cat.status)}">
-                    ${cat.status}
-                  </span>
+                <h3 class="h4 cat-name mb-2">${cat.name}</h3>
+
+                <div class="mb-2">
+                  <span class="cat-meta-chip">${formatAge(cat.age)}</span>
+                  <span class="cat-meta-chip">${cat.gender}</span>
                 </div>
 
-                <p class="cat-meta mb-2">
-                  ${formatAge(cat.age)} · ${cat.gender}
-                </p>
-
-                <p class="small mb-3" style="color:var(--brown-soft)">
-                  ${cat.breed} · ${cat.color}
-                </p>
+                <p class="cat-breed mb-3">${cat.breed}, ${cat.color}</p>
 
                 <div class="mb-3">${traitsHTML}</div>
 
@@ -889,179 +750,233 @@
                   </button>
                 </div>
               </div>
+
             </article>
           </div>
         `;
-      }
-
-      elResultsCount.textContent = "Showing " + catList.length +
-        (catList.length === 1 ? " cat" : " cats");
-
-      elEmptyState.classList.toggle("d-none", catList.length !== 0);
-    }
-
-    // Search by cat name or breed and apply the selected filters.
-    function filterCats() {
-      var searchText = elSearchInput.value.trim().toLowerCase();
-      var selectedAge = elAgeFilter.value;
-      var selectedGender = elGenderFilter.value;
-      var selectedStatus = elStatusFilter.value;
-      var matchingCats = [];
-
-      for (var i = 0; i < cats.length; i++) {
-        var cat = cats[i];
-
-        var matchesSearch =
-          cat.name.toLowerCase().includes(searchText) ||
-          cat.breed.toLowerCase().includes(searchText);
-
-        var matchesAge =
-          selectedAge === "all" ||
-          getAgeCategory(cat.age) === selectedAge;
-
-        var matchesGender =
-          selectedGender === "all" ||
-          cat.gender === selectedGender;
-
-        var matchesStatus =
-          selectedStatus === "all" ||
-          cat.status === selectedStatus;
-
-        if (matchesSearch && matchesAge && matchesGender && matchesStatus) {
-          matchingCats.push(cat);
         }
+
+        elResultsCount.textContent =
+          "Showing " +
+          catList.length +
+          (catList.length === 1 ? " cat" : " cats");
+
+        elEmptyState.classList.toggle("d-none", catList.length !== 0);
       }
 
-      renderCats(matchingCats);
-    }
+      function filterCats() {
+        var searchText = elSearchInput.value.trim().toLowerCase();
+        var selectedAge = elAgeFilter.value;
+        var selectedGender = elGenderFilter.value;
+        var selectedStatus = elStatusFilter.value;
 
-    // Show detailed information for the selected cat.
-    function showCatDetails(catId) {
-      var selectedCat = null;
+        var matchingCats = [];
 
-      for (var i = 0; i < cats.length; i++) {
-        if (cats[i].id === catId) {
-          selectedCat = cats[i];
-          break;
+        for (var i = 0; i < cats.length; i++) {
+          var cat = cats[i];
+
+          // Search by breed, or color.
+          var matchesSearch =
+            cat.breed.toLowerCase().includes(searchText) ||
+            cat.color.toLowerCase().includes(searchText);
+
+          // Match the selected age category, or allow all ages.
+          var matchesAge =
+            selectedAge === "all" || getAgeCategory(cat.age) === selectedAge;
+
+          // Match the selected gender, or allow all genders.
+          var matchesGender =
+            selectedGender === "all" || cat.gender === selectedGender;
+
+          // Match the selected adoption status, or allow all statuses.
+          var matchesStatus =
+            selectedStatus === "all" || cat.status === selectedStatus;
+
+          if (matchesSearch && matchesAge && matchesGender && matchesStatus) {
+            matchingCats.push(cat);
+          }
         }
+
+        // Display only the cats that passed the checks.
+        renderCats(matchingCats);
       }
 
-      if (selectedCat === null) return;
+      function showCatDetails(catId) {
+        var selectedCat = null;
 
-      elModalCatName.textContent = selectedCat.name + "'s Profile";
+        for (var i = 0; i < cats.length; i++) {
+          if (cats[i].id === catId) {
+            selectedCat = cats[i];
+            break;
+          }
+        }
 
-      var modalTraits = "";
+        if (selectedCat === null) {
+          return;
+        }
 
-      for (var j = 0; j < selectedCat.personality.length; j++) {
-        modalTraits += '<span class="trait">' +
-          selectedCat.personality[j] + '</span>';
-      }
+        elModalCatName.textContent = selectedCat.name + "'s Profile";
 
-      elModalCatBody.innerHTML = `
+        var modalTraits = createTraitsHTML(selectedCat.personality);
+
+        elModalCatBody.innerHTML = `
         <div class="row g-4">
-          <div class="col-md-5">
-            <img
-              src="${selectedCat.image}"
-              alt="${selectedCat.imageAlt}"
-              class="img-fluid rounded-4 w-100"
-              style="max-height:360px;object-fit:cover"
-              onerror="this.onerror=null;this.src='https://placehold.co/800x900/f6ecdd/563d2d?text=Cat+Photo';"
-            >
-          </div>
 
-          <div class="col-md-7">
-            <div class="mb-3">
-              <span class="badge rounded-pill status-badge ${getStatusClass(selectedCat.status)}">
+          <div class="col-md-5">
+            <div class="modal-photo-wrap h-100">
+              <img
+                src="${selectedCat.image}"
+                alt="${selectedCat.imageAlt}"
+                class="modal-photo"
+                onerror="this.onerror=null;this.src='https://placehold.co/800x900/0d2347/cfe0ff?text=Cat+Photo';"
+              >
+
+              <span class="badge status-badge ${getStatusClass(
+                selectedCat.status
+              )}">
                 ${selectedCat.status}
               </span>
             </div>
+          </div>
 
+          <div class="col-md-7">
             <p class="mb-3">${selectedCat.description}</p>
 
-            <div class="row g-3 mb-3">
+            <div class="mb-3">${modalTraits}</div>
+
+            <div class="row g-2 mb-3">
+
               <div class="col-6">
-                <div class="detail-label">Age</div>
-                <div class="fw-semibold">${formatAge(selectedCat.age)}</div>
-                <div class="small muted-copy">${getAgeCategory(selectedCat.age)}</div>
+                <div class="info-tile">
+                  <div class="detail-label">Age</div>
+                  <div class="fw-bold">${formatAge(selectedCat.age)}</div>
+                  <div class="small muted-copy">${getAgeCategory(
+                    selectedCat.age
+                  )}</div>
+                </div>
               </div>
 
               <div class="col-6">
-                <div class="detail-label">Gender</div>
-                <div class="fw-semibold">${selectedCat.gender}</div>
+                <div class="info-tile">
+                  <div class="detail-label">Gender</div>
+                  <div class="fw-bold">${selectedCat.gender}</div>
+                </div>
               </div>
 
               <div class="col-6">
-                <div class="detail-label">Breed</div>
-                <div class="fw-semibold">${selectedCat.breed}</div>
+                <div class="info-tile">
+                  <div class="detail-label">Breed</div>
+                  <div class="fw-bold">${selectedCat.breed}</div>
+                </div>
               </div>
 
               <div class="col-6">
-                <div class="detail-label">Color</div>
-                <div class="fw-semibold">${selectedCat.color}</div>
+                <div class="info-tile">
+                  <div class="detail-label">Color</div>
+                  <div class="fw-bold">${selectedCat.color}</div>
+                </div>
               </div>
 
               <div class="col-12">
-                <div class="detail-label mb-1">Personality</div>
-                ${modalTraits}
+                <div class="info-tile">
+                  <div class="detail-label"> Health Information</div>
+                  <div class="fw-bold">${selectedCat.healthStatus}</div>
+                </div>
               </div>
 
               <div class="col-12">
-                <div class="detail-label">Sample health information</div>
-                <div>${selectedCat.healthStatus}</div>
+                <div class="info-tile">
+                  <div class="detail-label">Spayed / Neutered</div>
+                  <div class="fw-bold">
+                    ${
+                      selectedCat.isSpayedNeutered
+                        ? "Yes ( record)"
+                        : "No ( record)"
+                    }
+                  </div>
+                </div>
               </div>
 
-              <div class="col-12">
-                <div class="detail-label">Spayed / neutered</div>
-                <div>${selectedCat.isSpayedNeutered ? "Yes (sample record)" : "No (sample record)"}</div>
-              </div>
+<div class="col-12">
+    <div class="info-tile">
+        <div class="detail-label">
+            <i class="bi bi-building me-1"></i>
+            Shelter Contact Information
+        </div>
+
+        <div class="mb-2">
+            <span class="fw-bold">Shelter:</span>
+            ${selectedCat.shelter || "Animal Shelter"}
+        </div>
+
+        <div>
+            <span class="fw-bold">Contact Number:</span>
+            <a href="tel:${selectedCat.shelterContact || ""}">
+                ${selectedCat.shelterContact || "Contact information not provided"}
+            </a>
+        </div>
+    </div>
+</div>
+
             </div>
 
-            <p class="small muted-copy mb-0">
-              This is a demonstration profile. Confirm availability and all medical
-              details with a real shelter or rescue organization.
-            </p>
+<p class="small muted-copy mt-3 mb-0">
+    <i class="bi bi-info-circle me-1"></i>
+    Contact the shelter first to confirm that this cat is still available,
+    ask about reservation and adoption requirements, and arrange your visit.
+    Cat availability may change without notice.
+</p>
           </div>
+
         </div>
       `;
 
-      var modal = getCatDetailsModal();
+        if (window.bootstrap && window.bootstrap.Modal) {
+          if (catDetailsModal === null) {
+            catDetailsModal = new bootstrap.Modal(
+              document.getElementById("catDetailsModal")
+            );
+          }
 
-      if (modal) {
-        modal.show();
-      } else {
-        alert("The cat details are ready, but Bootstrap JavaScript did not load. Check your internet connection and refresh the page.");
+          catDetailsModal.show();
+        } else {
+          alert(
+            "The cat profile is ready, but Bootstrap JavaScript did not load. Check your internet connection and refresh the page."
+          );
+        }
       }
-    }
 
-    // Search when the visitor presses Enter or clicks Search.
-    document.getElementById("searchForm").addEventListener("submit", function (event) {
-      event.preventDefault();
-      filterCats();
-    });
+      document
+        .getElementById("searchForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          filterCats();
+        });
 
-    // Also update results immediately while the visitor types.
-    elSearchInput.addEventListener("input", filterCats);
+      elSearchInput.addEventListener("input", filterCats);
 
-    // Update the gallery when a filter changes.
-    elAgeFilter.addEventListener("change", filterCats);
-    elGenderFilter.addEventListener("change", filterCats);
-    elStatusFilter.addEventListener("change", filterCats);
+      elAgeFilter.addEventListener("change", filterCats);
+      elGenderFilter.addEventListener("change", filterCats);
+      elStatusFilter.addEventListener("change", filterCats);
 
-    // Reset all controls and display every sample cat again.
-    function resetFilters() {
-      elSearchInput.value = "";
-      elAgeFilter.value = "all";
-      elGenderFilter.value = "all";
-      elStatusFilter.value = "all";
-      filterCats();
-    }
+      function resetFilters() {
+        elSearchInput.value = "";
+        elAgeFilter.value = "all";
+        elGenderFilter.value = "all";
+        elStatusFilter.value = "all";
 
-    document.getElementById("resetFilters").addEventListener("click", resetFilters);
-    document.getElementById("emptyReset").addEventListener("click", resetFilters);
+        filterCats();
+      }
 
-    // Initial display: show all cats, regardless of adoption status.
-    renderCats(cats);
-  </script>
+      document
+        .getElementById("resetFilters")
+        .addEventListener("click", resetFilters);
+      document
+        .getElementById("emptyReset")
+        .addEventListener("click", resetFilters);
 
-</body>
+      updateStatistics();
+      renderCats(cats);
+    </script>
+  </body>
 </html>
