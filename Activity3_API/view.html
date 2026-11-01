@@ -1,0 +1,274 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Breed Profile | Purrpedia</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cream: #F5F0E6;
+            --paper: #FFFDF6;
+            --brown: #4A3528;
+            --brown-light: #80664E;
+            --green: #1E3557;
+            --green-light: #304B70;
+            --gold: #B69A63;
+            --text: #40372E;
+        }
+
+        body {
+            background-color: var(--cream);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Navigation */
+        .navbar {
+            background-color: #172A45;
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #FFFDF6 !important;
+        }
+
+        .navbar .nav-link {
+            color: #F5F0E6;
+        }
+
+        .navbar .nav-link:hover {
+            color: var(--gold);
+        }
+
+        /* Profile Header */
+        .profile-header {
+            background-color: var(--green);
+            color: white;
+            padding: 45px 15px;
+            text-align: center;
+        }
+
+        .profile-header h1 {
+            font-weight: 700;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+        }
+
+        .profile-header p {
+            margin-bottom: 0;
+            color: #E7E1D7;
+        }
+
+        /* Main Profile */
+        .profile-container {
+            max-width: 1050px;
+            margin: 40px auto;
+            padding: 0 15px;
+        }
+
+        .profile-card {
+            background-color: var(--paper);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(55, 40, 25, 0.12);
+            border: 1px solid #E0D2B9;
+        }
+
+        .profile-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 5px solid #E0D2B9;
+            background-color: #EAE0CE;
+        }
+
+        .breed-name {
+            color: var(--brown);
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .breed-description {
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        /* Information Sections */
+        .info-section {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #E5DCCB;
+        }
+
+        .info-section h3 {
+            color: var(--green);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .info-item {
+            margin-bottom: 13px;
+        }
+
+        .info-label {
+            display: block;
+            color: var(--brown-light);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+        }
+
+        .info-value {
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .temperament-tag {
+            display: inline-block;
+            background-color: #E8E1D4;
+            color: var(--brown);
+            border-radius: 20px;
+            padding: 6px 13px;
+            margin: 3px;
+            font-size: 0.85rem;
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: inline-block;
+            background-color: var(--green);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--green-light);
+            color: white;
+        }
+
+        /* Loading and Error */
+        .message-area {
+            background-color: var(--paper);
+            padding: 50px 20px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .message-area h2 {
+            color: var(--brown);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #172A45;
+            color: #F5F0E6;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 767px) {
+            .profile-card {
+                padding: 20px;
+            }
+
+            .breed-name {
+                font-size: 1.8rem;
+            }
+
+            .profile-image {
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+
+            <a class="navbar-brand" href="index.html">Purrpedia</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarMenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#encyclopedia">Cat Breeds</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Profile Header -->
+    <section class="profile-header">
+        <div class="container">
+            <h1>Cat Breed Profile</h1>
+            <p>Discover more about this feline companion.</p>
+        </div>
+    </section>
+
+    <!-- Breed Profile Content -->
+    <main class="profile-container">
+
+        <div id="profileContent">
+
+            <div class="message-area">
+                <div>
+                    <div class="spinner-border text-primary mb-3" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+
+                    <h2>Loading Breed Profile...</h2>
+                    <p>Please wait while the information is being retrieved.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="index.html" id="backButton" class="back-btn">
+                Back to Encyclopedia
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p class="mb-0">
+            &copy; 2026 Purrpedia | An Encyclopedia of Purrs and Breeds
+        </p>
+    </footer>
