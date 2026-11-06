@@ -1,924 +1,1051 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Purrpedia | An Encyclopedia of Purrs and Breeds</title>
-<!-- Light Browser Tabs -->
-<link rel="icon" href="assets/icon-light.png" media="(prefers-color-scheme: light)" />
+    <!-- Light Browser Tabs -->
+    <link
+      rel="icon"
+      href="assets/icon-light.png"
+      media="(prefers-color-scheme: light)"
+    />
 
-<!--Dark Browser Tabs -->
-<link rel="icon" href="assets/icon-dark.png" media="(prefers-color-scheme: dark)" />
+    <!--Dark Browser Tabs -->
+    <link
+      rel="icon"
+      href="assets/icon-dark.png"
+      media="(prefers-color-scheme: dark)"
+    />
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
-        :root {
-            --ink: #1B1B3A;
-            --ink-2: #2D2D5C;
-            --mist: #E9E8F1;
-            --mist-2: #DDDBEA;
-            --paper: #FDFCFF;
-            --saffron: #F2A93B;
-            --saffron-deep: #D88A12;
-            --text: #2A2A40;
-            --muted: #6A6A86;
-            --line: #D8D6E6;
+      :root {
+        --ink: #1b1b3a;
+        --ink-2: #2d2d5c;
+        --mist: #e9e8f1;
+        --mist-2: #dddbea;
+        --paper: #fdfcff;
+        --saffron: #f2a93b;
+        --saffron-deep: #d88a12;
+        --text: #2a2a40;
+        --muted: #6a6a86;
+        --line: #d8d6e6;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--mist);
+        color: var(--text);
+        font-family: "Newsreader", Georgia, serif;
+        font-size: 1.05rem;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      .navbar-brand,
+      .btn,
+      .view-btn,
+      .hero-btn {
+        font-family: "Bricolage Grotesque", "Segoe UI", sans-serif;
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible {
+        outline: 3px solid var(--saffron);
+        outline-offset: 2px;
+      }
+
+      /* Navigation */
+      .navbar {
+        background-color: var(--ink);
+        position: relative;
+        padding: 12px 0;
+      }
+
+      .navbar-brand {
+        font-size: 1.55rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: #fff !important;
+      }
+
+      .navbar-brand img {
+        height: 34px;
+        width: auto;
+        margin-right: 10px;
+        vertical-align: middle;
+      }
+
+      .navbar .nav-link {
+        color: #d9d8ec;
+        font-family: "Bricolage Grotesque", sans-serif;
+        font-weight: 500;
+        margin-left: 14px;
+        border-bottom: 2px solid transparent;
+        padding: 6px 2px;
+      }
+
+      .navbar .nav-link:hover {
+        color: #fff;
+        border-bottom-color: var(--saffron);
+      }
+
+      /* Hero */
+      .hero {
+        background: var(--ink);
+        color: #fff;
+        padding: 27px 0 0;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        width: 560px;
+        height: 560px;
+        border-radius: 50%;
+        background: var(--ink-2);
+        right: -140px;
+        top: -120px;
+      }
+
+      .hero .container {
+        position: relative;
+      }
+
+      .hero-subtitle {
+        font-style: italic;
+        color: var(--saffron);
+        font-size: 1.25rem;
+        margin-bottom: 8px;
+      }
+
+      .hero h1 {
+        font-size: clamp(3.6rem, 9vw, 7rem);
+        font-weight: 800;
+        letter-spacing: -0.045em;
+        line-height: 0.95;
+        margin-bottom: 24px;
+      }
+
+      .hero-text {
+        max-width: 520px;
+        color: #cfcee6;
+        line-height: 1.7;
+        font-size: 1.12rem;
+      }
+
+      .hero-btn {
+        display: inline-block;
+        margin-top: 28px;
+        padding: 14px 30px;
+        background: var(--saffron);
+        color: var(--ink);
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 700;
+        transition: background 0.2s, transform 0.2s;
+      }
+
+      .hero-btn:hover {
+        background: #ffc25e;
+        color: var(--ink);
+        transform: translateY(-2px);
+      }
+
+      .hero-art {
+        width: min(100%, 380px);
+        aspect-ratio: 3 / 4;
+        margin-left: auto;
+        margin-bottom: 40px;
+        border-radius: 10px;
+        overflow: hidden;
+        background: var(--ink-2);
+        display: block;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45),
+          0 10px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero-art img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .hero-features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0;
+        margin-top: 56px;
+        border-top: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .hero-feature {
+        flex: 1 1 200px;
+        padding: 22px 24px 26px 0;
+      }
+
+      .hero-feature + .hero-feature {
+        padding-left: 24px;
+        border-left: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .hero-feature h3 {
+        color: var(--saffron);
+        font-size: 1.9rem;
+        font-weight: 800;
+        margin-bottom: 2px;
+      }
+
+      .hero-feature p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: #cfcee6;
+      }
+
+      /* About Section */
+      .about-section {
+        padding: 100px 0;
+        background-color: var(--paper);
+      }
+
+      .about-section h2 {
+        color: var(--ink);
+        font-size: clamp(2.2rem, 4vw, 3.2rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+      }
+
+      .about-intro {
+        max-width: 700px;
+        margin: 0 auto 50px;
+        line-height: 1.8;
+        font-size: 1.15rem;
+        color: var(--muted);
+      }
+
+      .about-card {
+        height: 100%;
+        padding: 32px 28px;
+        background-color: var(--mist);
+        border-radius: 24px 24px 24px 4px;
+        text-align: left;
+      }
+
+      .about-card h3 {
+        color: var(--ink);
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .about-card p {
+        line-height: 1.7;
+        margin-bottom: 0;
+      }
+
+      .about-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--ink);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 18px;
+      }
+
+      .api-credit {
+        margin-top: 40px;
+        padding: 36px 28px;
+        background-color: var(--ink);
+        color: #fff;
+        border-radius: 28px;
+        text-align: center;
+      }
+
+      .api-credit h3 {
+        color: var(--saffron);
+        font-weight: 700;
+      }
+      .api-credit p {
+        line-height: 1.7;
+        color: #d5d4ea;
+      }
+
+      .api-credit a {
+        color: var(--ink);
+        background: var(--saffron);
+        display: inline-block;
+        padding: 10px 24px;
+        border-radius: 50px;
+        font-family: "Bricolage Grotesque", sans-serif;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .api-credit a:hover {
+        background: #ffc25e;
+      }
+
+      /* Search Section */
+      .search-section {
+        padding: 90px 15px 10px;
+      }
+
+      .search-section h2 {
+        color: var(--ink);
+        font-weight: 800;
+        font-size: clamp(2rem, 4vw, 2.9rem);
+        letter-spacing: -0.03em;
+      }
+
+      .search-section p {
+        color: var(--muted);
+      }
+
+      .search-box {
+        max-width: 620px;
+        margin: 22px auto 0;
+      }
+
+      .search-box .input-group {
+        background: var(--paper);
+        border-radius: 50px;
+        padding: 6px;
+        box-shadow: 0 6px 24px rgba(27, 27, 58, 0.12);
+      }
+
+      .search-box .form-control {
+        border: 0;
+        background: transparent;
+        border-radius: 50px;
+        padding: 10px 20px;
+        font-family: "Newsreader", serif;
+        font-size: 1.05rem;
+        box-shadow: none;
+      }
+
+      .search-box .btn {
+        background-color: var(--ink);
+        color: #fff;
+        border-radius: 50px !important;
+        padding: 10px 28px;
+        font-weight: 600;
+      }
+
+      .search-box .btn:hover {
+        background-color: var(--ink-2);
+        color: #fff;
+      }
+
+      .clear-btn {
+        color: var(--ink);
+        border: 1px solid var(--ink);
+        background: transparent;
+        border-radius: 50px;
+        padding: 4px 16px;
+      }
+
+      .clear-btn:hover {
+        background-color: var(--ink);
+        color: #fff;
+      }
+
+      /* Book */
+      .book-container {
+        max-width: 1100px;
+        margin: 25px auto 70px;
+        padding: 10px;
+      }
+
+      .book {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background-color: var(--ink);
+        border-radius: 22px;
+        padding: 14px;
+        box-shadow: 0 24px 50px rgba(27, 27, 58, 0.3);
+        position: relative;
+      }
+
+      /* Spine shadow at the centre of the book */
+      .book::before {
+        content: "";
+        position: absolute;
+        width: 70px;
+        top: 14px;
+        bottom: 82px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(
+          to right,
+          rgba(27, 27, 58, 0) 0%,
+          rgba(27, 27, 58, 0.16) 45%,
+          rgba(27, 27, 58, 0.28) 50%,
+          rgba(27, 27, 58, 0.16) 55%,
+          rgba(27, 27, 58, 0) 100%
+        );
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      .book-page {
+        background-color: var(--paper);
+        min-width: 0;
+        min-height: 510px;
+        padding: 22px 26px 50px;
+        position: relative;
+      }
+
+      .book-page::after {
+        position: absolute;
+        bottom: 16px;
+        color: var(--muted);
+        font-family: "Newsreader", serif;
+        font-size: 1.05rem;
+        font-style: italic;
+      }
+
+      .left-page::after {
+        content: attr(data-page);
+        left: 28px;
+      }
+      .right-page::after {
+        content: attr(data-page);
+        right: 28px;
+      }
+
+      .left-page {
+        border-radius: 10px 0 0 10px;
+        padding-right: 36px;
+      }
+      .right-page {
+        border-radius: 0 10px 10px 0;
+        padding-left: 36px;
+      }
+
+      /* Breed Entries */
+      .breed-entry {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        min-height: 150px;
+        padding: 12px 0;
+        border-bottom: 1px dashed var(--line);
+      }
+
+      .breed-entry:last-child {
+        border-bottom: none;
+      }
+
+      .breed-image {
+        width: 92px;
+        height: 118px;
+        flex-shrink: 0;
+        border-radius: 6px;
+        object-fit: cover;
+        background-color: var(--mist);
+        border: 0;
+        box-shadow: 0 10px 22px rgba(27, 27, 58, 0.28),
+          0 3px 6px rgba(27, 27, 58, 0.16);
+      }
+
+      .breed-info {
+        min-width: 0;
+      }
+
+      .breed-info h3 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--ink);
+        letter-spacing: -0.01em;
+        margin-bottom: 4px;
+      }
+
+      .breed-info p {
+        font-size: 0.9rem;
+        line-height: 1.45;
+        margin-bottom: 4px;
+      }
+
+      .breed-origin {
+        color: var(--muted);
+        font-style: italic;
+      }
+
+      .view-btn {
+        display: inline-block;
+        background-color: var(--ink);
+        color: #fff;
+        text-decoration: none;
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 6px 16px;
+        border-radius: 50px;
+        margin-top: 6px;
+        transition: background 0.2s, color 0.2s;
+      }
+
+      .view-btn:hover {
+        background-color: var(--saffron);
+        color: var(--ink);
+      }
+
+      /* Page Numbers (legacy) */
+      .page-number {
+        position: absolute;
+        bottom: 12px;
+        color: var(--muted);
+        font-style: italic;
+        font-size: 0.85rem;
+      }
+
+      .left-page .page-number {
+        left: 25px;
+      }
+      .right-page .page-number {
+        right: 25px;
+      }
+
+      /* Loading and Error Messages */
+      .message-area {
+        background-color: var(--paper);
+        min-height: 350px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 30px;
+        border-radius: 10px;
+        grid-column: 1 / -1;
+      }
+
+      .message-area h3 {
+        color: var(--ink);
+        font-weight: 700;
+      }
+
+      .pagination-section .btn {
+        background-color: var(--ink);
+        color: white;
+        border: none;
+        min-width: 105px;
+      }
+
+      .pagination-section .btn:hover {
+        background-color: var(--ink-2);
+      }
+      .pagination-section .btn:disabled {
+        background-color: #a9a9a9;
+        cursor: not-allowed;
+      }
+
+      #pageInfo {
+        color: var(--paper);
+        font-weight: 600;
+      }
+
+      /* Pagination inside the book */
+      .book-pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 16px 10px 6px;
+        grid-column: 1 / -1;
+      }
+
+      .pagination-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 18px;
+      }
+
+      .book-pagination .btn {
+        background-color: var(--saffron);
+        color: var(--ink);
+        border: 0;
+        border-radius: 50px;
+        padding: 9px 24px;
+        min-width: 110px;
+        font-size: 0.88rem;
+        font-weight: 700;
+        transition: background 0.2s;
+      }
+
+      .book-pagination .btn:hover:not(:disabled) {
+        background-color: #ffc25e;
+      }
+
+      .book-pagination .btn:disabled {
+        background-color: var(--ink-2);
+        color: #8d8cb0;
+        cursor: not-allowed;
+      }
+
+      .book-pagination #pageInfo {
+        color: #fff;
+        font-family: "Newsreader", serif;
+        font-style: italic;
+        font-size: 1.1rem;
+        font-weight: 500;
+        min-width: 130px;
+        text-align: center;
+      }
+
+      /* Footer */
+      footer {
+        background-color: var(--ink);
+        color: #cfcee6;
+        text-align: center;
+        padding: 26px;
+        font-size: 0.92rem;
+      }
+
+      /* Laptop screens */
+      @media (min-width: 768px) and (max-height: 800px) {
+        .book-page {
+          min-height: 480px;
+          padding-top: 18px;
         }
-
-        * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-
-        body {
-            background-color: var(--mist);
-            color: var(--text);
-            font-family: 'Newsreader', Georgia, serif;
-            font-size: 1.05rem;
+        .breed-entry {
+          min-height: 135px;
+          padding: 8px 0;
         }
-
-        h1, h2, h3, h4, .navbar-brand, .btn, .view-btn, .hero-btn {
-            font-family: 'Bricolage Grotesque', 'Segoe UI', sans-serif;
+        .breed-image {
+          width: 80px;
+          height: 104px;
         }
-
-        a:focus-visible, button:focus-visible, input:focus-visible {
-            outline: 3px solid var(--saffron);
-            outline-offset: 2px;
+        .breed-info h3 {
+          font-size: 1.1rem;
         }
-
-        /* Navigation */
-        .navbar {
-            background-color: var(--ink);
-            position: relative;
-            padding: 12px 0;
+        .breed-info p {
+          font-size: 0.84rem;
         }
+      }
 
-        .navbar-brand {
-            font-size: 1.55rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            color: #fff !important;
-        }
-
-.navbar-brand img {
-    height: 34px;
-    width: auto;
-    margin-right: 10px;
-    vertical-align: middle;
-}
-
-        .navbar .nav-link {
-            color: #D9D8EC;
-            font-family: 'Bricolage Grotesque', sans-serif;
-            font-weight: 500;
-            margin-left: 14px;
-            border-bottom: 2px solid transparent;
-            padding: 6px 2px;
-        }
-
-        .navbar .nav-link:hover {
-            color: #fff;
-            border-bottom-color: var(--saffron);
-        }
-
-        /* Hero */
+      /* Tablet and mobile */
+      @media (max-width: 991px) {
         .hero {
-            background: var(--ink);
-            color: #fff;
-            padding: 27px 0 0;
-            overflow: hidden;
-            position: relative;
+          padding-top: 60px;
         }
-
-        .hero::before {
-            content: "";
-            position: absolute;
-            width: 560px;
-            height: 560px;
-            border-radius: 50%;
-            background: var(--ink-2);
-            right: -140px;
-            top: -120px;
-        }
-
-        .hero .container { position: relative; }
-
-        .hero-subtitle {
-            font-style: italic;
-            color: var(--saffron);
-            font-size: 1.25rem;
-            margin-bottom: 8px;
-        }
-
-        .hero h1 {
-            font-size: clamp(3.6rem, 9vw, 7rem);
-            font-weight: 800;
-            letter-spacing: -0.045em;
-            line-height: 0.95;
-            margin-bottom: 24px;
-        }
-
-        .hero-text {
-            max-width: 520px;
-            color: #CFCEE6;
-            line-height: 1.7;
-            font-size: 1.12rem;
-        }
-
-        .hero-btn {
-            display: inline-block;
-            margin-top: 28px;
-            padding: 14px 30px;
-            background: var(--saffron);
-            color: var(--ink);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 700;
-            transition: background 0.2s, transform 0.2s;
-        }
-
-        .hero-btn:hover {
-            background: #FFC25E;
-            color: var(--ink);
-            transform: translateY(-2px);
-        }
-
         .hero-art {
-            width: min(100%, 380px);
-            aspect-ratio: 3 / 4;
-            margin-left: auto;
-            margin-bottom: 40px;
-            border-radius: 10px;
-            overflow: hidden;
-            background: var(--ink-2);
-            display: block;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45), 0 10px 20px rgba(0, 0, 0, 0.3);
+          margin: 40px auto 0;
+          width: min(100%, 320px);
         }
+      }
 
-        .hero-art img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .hero-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0;
-            margin-top: 56px;
-            border-top: 1px solid rgba(255, 255, 255, 0.18);
-        }
-
-        .hero-feature {
-            flex: 1 1 200px;
-            padding: 22px 24px 26px 0;
-        }
-
-        .hero-feature + .hero-feature {
-            padding-left: 24px;
-            border-left: 1px solid rgba(255, 255, 255, 0.18);
-        }
-
-        .hero-feature h3 {
-            color: var(--saffron);
-            font-size: 1.9rem;
-            font-weight: 800;
-            margin-bottom: 2px;
-        }
-
-        .hero-feature p {
-            margin: 0;
-            font-size: 0.95rem;
-            color: #CFCEE6;
-        }
-
-        /* About Section */
+      @media (max-width: 767px) {
         .about-section {
-            padding: 100px 0;
-            background-color: var(--paper);
+          padding: 70px 0;
         }
-
-        .about-section h2 {
-            color: var(--ink);
-            font-size: clamp(2.2rem, 4vw, 3.2rem);
-            font-weight: 800;
-            letter-spacing: -0.03em;
+        .search-section {
+          padding-top: 70px;
         }
-
-        .about-intro {
-            max-width: 700px;
-            margin: 0 auto 50px;
-            line-height: 1.8;
-            font-size: 1.15rem;
-            color: var(--muted);
+        .hero-feature + .hero-feature {
+          padding-left: 0;
+          border-left: 0;
         }
-
-        .about-card {
-            height: 100%;
-            padding: 32px 28px;
-            background-color: var(--mist);
-            border-radius: 24px 24px 24px 4px;
-            text-align: left;
-        }
-
-        .about-card h3 {
-            color: var(--ink);
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .about-card p { line-height: 1.7; margin-bottom: 0; }
-
-        .about-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: var(--ink);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 18px;
-        }
-
-        .api-credit {
-            margin-top: 40px;
-            padding: 36px 28px;
-            background-color: var(--ink);
-            color: #fff;
-            border-radius: 28px;
-            text-align: center;
-        }
-
-        .api-credit h3 { color: var(--saffron); font-weight: 700; }
-        .api-credit p { line-height: 1.7; color: #D5D4EA; }
-
-        .api-credit a {
-            color: var(--ink);
-            background: var(--saffron);
-            display: inline-block;
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-family: 'Bricolage Grotesque', sans-serif;
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        .api-credit a:hover { background: #FFC25E; }
-
-        /* Search Section */
-        .search-section { padding: 90px 15px 10px; }
-
-        .search-section h2 {
-            color: var(--ink);
-            font-weight: 800;
-            font-size: clamp(2rem, 4vw, 2.9rem);
-            letter-spacing: -0.03em;
-        }
-
-        .search-section p { color: var(--muted); }
-
-        .search-box { max-width: 620px; margin: 22px auto 0; }
-
-        .search-box .input-group {
-            background: var(--paper);
-            border-radius: 50px;
-            padding: 6px;
-            box-shadow: 0 6px 24px rgba(27, 27, 58, 0.12);
-        }
-
-        .search-box .form-control {
-            border: 0;
-            background: transparent;
-            border-radius: 50px;
-            padding: 10px 20px;
-            font-family: 'Newsreader', serif;
-            font-size: 1.05rem;
-            box-shadow: none;
-        }
-
-        .search-box .btn {
-            background-color: var(--ink);
-            color: #fff;
-            border-radius: 50px !important;
-            padding: 10px 28px;
-            font-weight: 600;
-        }
-
-        .search-box .btn:hover { background-color: var(--ink-2); color: #fff; }
-
-        .clear-btn {
-            color: var(--ink);
-            border: 1px solid var(--ink);
-            background: transparent;
-            border-radius: 50px;
-            padding: 4px 16px;
-        }
-
-        .clear-btn:hover { background-color: var(--ink); color: #fff; }
-
-        /* Book */
         .book-container {
-            max-width: 1100px;
-            margin: 25px auto 70px;
-            padding: 10px;
+          padding: 10px 15px;
         }
-
         .book {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            background-color: var(--ink);
-            border-radius: 22px;
-            padding: 14px;
-            box-shadow: 0 24px 50px rgba(27, 27, 58, 0.3);
-            position: relative;
+          display: block;
+          padding: 8px;
+          border-radius: 18px;
         }
-
-        /* Spine shadow at the centre of the book */
         .book::before {
-            content: "";
-            position: absolute;
-            width: 70px;
-            top: 14px;
-            bottom: 82px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(to right,
-                rgba(27, 27, 58, 0) 0%,
-                rgba(27, 27, 58, 0.16) 45%,
-                rgba(27, 27, 58, 0.28) 50%,
-                rgba(27, 27, 58, 0.16) 55%,
-                rgba(27, 27, 58, 0) 100%);
-            z-index: 2;
-            pointer-events: none;
+          display: none;
         }
 
         .book-page {
-            background-color: var(--paper);
-            min-width: 0;
-            min-height: 510px;
-            padding: 22px 26px 50px;
-            position: relative;
+          min-height: 0;
+          padding: 16px 18px 42px;
+          border-radius: 10px;
         }
 
-        .book-page::after {
-            position: absolute;
-            bottom: 16px;
-            color: var(--muted);
-            font-family: 'Newsreader', serif;
-            font-size: 1.05rem;
-            font-style: italic;
+        .left-page {
+          margin-bottom: 8px;
         }
-
-        .left-page::after { content: attr(data-page); left: 28px; }
-        .right-page::after { content: attr(data-page); right: 28px; }
-
-        .left-page { border-radius: 10px 0 0 10px; padding-right: 36px; }
-        .right-page { border-radius: 0 10px 10px 0; padding-left: 36px; }
-
-        /* Breed Entries */
+        .right-page {
+          padding-left: 18px;
+        }
+        .left-page {
+          padding-right: 18px;
+        }
         .breed-entry {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            min-height: 150px;
-            padding: 12px 0;
-            border-bottom: 1px dashed var(--line);
+          min-height: 125px;
         }
-
-        .breed-entry:last-child { border-bottom: none; }
-
         .breed-image {
-            width: 92px;
-            height: 118px;
-            flex-shrink: 0;
-            border-radius: 6px;
-            object-fit: cover;
-            background-color: var(--mist);
-            border: 0;
-            box-shadow: 0 10px 22px rgba(27, 27, 58, 0.28), 0 3px 6px rgba(27, 27, 58, 0.16);
+          width: 80px;
+          height: 104px;
         }
-
-        .breed-info { min-width: 0; }
-
-        .breed-info h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--ink);
-            letter-spacing: -0.01em;
-            margin-bottom: 4px;
-        }
-
-        .breed-info p {
-            font-size: 0.9rem;
-            line-height: 1.45;
-            margin-bottom: 4px;
-        }
-
-        .breed-origin { color: var(--muted); font-style: italic; }
-
-        .view-btn {
-            display: inline-block;
-            background-color: var(--ink);
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.78rem;
-            font-weight: 600;
-            padding: 6px 16px;
-            border-radius: 50px;
-            margin-top: 6px;
-            transition: background 0.2s, color 0.2s;
-        }
-
-        .view-btn:hover { background-color: var(--saffron); color: var(--ink); }
-
-        /* Page Numbers (legacy) */
-        .page-number {
-            position: absolute;
-            bottom: 12px;
-            color: var(--muted);
-            font-style: italic;
-            font-size: 0.85rem;
-        }
-
-        .left-page .page-number { left: 25px; }
-        .right-page .page-number { right: 25px; }
-
-        /* Loading and Error Messages */
-        .message-area {
-            background-color: var(--paper);
-            min-height: 350px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 30px;
-            border-radius: 10px;
-            grid-column: 1 / -1;
-        }
-
-        .message-area h3 { color: var(--ink); font-weight: 700; }
-
-        .pagination-section .btn {
-            background-color: var(--ink);
-            color: white;
-            border: none;
-            min-width: 105px;
-        }
-
-        .pagination-section .btn:hover { background-color: var(--ink-2); }
-        .pagination-section .btn:disabled { background-color: #A9A9A9; cursor: not-allowed; }
-
-        #pageInfo { color: var(--paper); font-weight: 600; }
-
-        /* Pagination inside the book */
         .book-pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            padding: 16px 10px 6px;
-            grid-column: 1 / -1;
+          padding-top: 14px;
         }
+      }
 
+      @media (max-width: 420px) {
+        .breed-entry {
+          align-items: flex-start;
+        }
+        .breed-image {
+          width: 68px;
+          height: 90px;
+        }
+        .breed-info h3 {
+          font-size: 1.05rem;
+        }
+        .breed-info p {
+          font-size: 0.8rem;
+        }
         .pagination-controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 18px;
+          gap: 8px;
         }
-
         .book-pagination .btn {
-            background-color: var(--saffron);
-            color: var(--ink);
-            border: 0;
-            border-radius: 50px;
-            padding: 9px 24px;
-            min-width: 110px;
-            font-size: 0.88rem;
-            font-weight: 700;
-            transition: background 0.2s;
+          min-width: 90px;
+          padding: 9px 14px;
         }
+      }
 
-        .book-pagination .btn:hover:not(:disabled) { background-color: #FFC25E; }
-
-        .book-pagination .btn:disabled {
-            background-color: var(--ink-2);
-            color: #8D8CB0;
-            cursor: not-allowed;
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
         }
-
-        .book-pagination #pageInfo {
-            color: #fff;
-            font-family: 'Newsreader', serif;
-            font-style: italic;
-            font-size: 1.1rem;
-            font-weight: 500;
-            min-width: 130px;
-            text-align: center;
+        * {
+          transition: none !important;
         }
-
-        /* Footer */
-        footer {
-            background-color: var(--ink);
-            color: #CFCEE6;
-            text-align: center;
-            padding: 26px;
-            font-size: 0.92rem;
-        }
-
-        /* Laptop screens */
-        @media (min-width: 768px) and (max-height: 800px) {
-            .book-page { min-height: 480px; padding-top: 18px; }
-            .breed-entry { min-height: 135px; padding: 8px 0; }
-            .breed-image { width: 80px; height: 104px; }
-            .breed-info h3 { font-size: 1.1rem; }
-            .breed-info p { font-size: 0.84rem; }
-        }
-
-        /* Tablet and mobile */
-        @media (max-width: 991px) {
-            .hero { padding-top: 60px; }
-            .hero-art { margin: 40px auto 0; width: min(100%, 320px); }
-        }
-
-        @media (max-width: 767px) {
-            .about-section { padding: 70px 0; }
-            .search-section { padding-top: 70px; }
-            .hero-feature + .hero-feature { padding-left: 0; border-left: 0; }
-            .book-container { padding: 10px 15px; }
-            .book { display: block; padding: 8px; border-radius: 18px; }
-            .book::before { display: none; }
-
-            .book-page {
-                min-height: 0;
-                padding: 16px 18px 42px;
-                border-radius: 10px;
-            }
-
-            .left-page { margin-bottom: 8px; }
-            .right-page { padding-left: 18px; }
-            .left-page { padding-right: 18px; }
-            .breed-entry { min-height: 125px; }
-            .breed-image { width: 80px; height: 104px; }
-            .book-pagination { padding-top: 14px; }
-        }
-
-        @media (max-width: 420px) {
-            .breed-entry { align-items: flex-start; }
-            .breed-image { width: 68px; height: 90px; }
-            .breed-info h3 { font-size: 1.05rem; }
-            .breed-info p { font-size: 0.8rem; }
-            .pagination-controls { gap: 8px; }
-            .book-pagination .btn { min-width: 90px; padding: 9px 14px; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            html { scroll-behavior: auto; }
-            * { transition: none !important; }
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-<a class="navbar-brand d-flex align-items-center" href="index.html">
-    <img src="assets/icon-dark.png" alt="Purrpedia logo">
-    Purrpedia
-</a>
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <img src="assets/icon-dark.png" alt="Purrpedia logo" />
+          Purrpedia
+        </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarMenu"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="collapse navbar-collapse" id="navbarMenu">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#encyclopedia">Cat Breeds</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
-                    </li>
-                </ul>
-            </div>
+        <div class="collapse navbar-collapse" id="navbarMenu">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#encyclopedia">Cat Breeds</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
     <!-- Home / Hero Section -->
     <section class="hero" id="home">
-        <div class="container">
+      <div class="container">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-7">
+            <p class="hero-subtitle">An Encyclopedia of Purrs and Breeds</p>
 
-<div class="row align-items-center g-4">
-<div class="col-lg-7">
+            <h1>Purrpedia</h1>
 
-                    <p class="hero-subtitle">
-                        An Encyclopedia of Purrs and Breeds
-                    </p>
+            <p class="hero-text">
+              Welcome to Purrpedia, your online guide to the fascinating world
+              of cats! Discover different cat breeds, learn about their origins,
+              explore their unique characteristics, and get to know more about
+              our beloved feline companions. Whether you are a cat lover or
+              simply curious about different breeds, Purrpedia makes exploring
+              the world of cats easier and more enjoyable.
+            </p>
 
-                    <h1>Purrpedia</h1>
+            <!-- Explore Button -->
+            <a href="#encyclopedia" class="hero-btn"> Explore Cat Breeds </a>
+          </div>
 
-                    <p class="hero-text">
-                        Welcome to Purrpedia, your online guide to the fascinating
-                        world of cats! Discover different cat breeds, learn about
-                        their origins, explore their unique characteristics, and
-                        get to know more about our beloved feline companions.
-
-                        Whether you are a cat lover or simply curious about different
-                        breeds, Purrpedia makes exploring the world of cats easier
-                        and more enjoyable.
-                    </p>
-
-                    <!-- Explore Button -->
-                    <a href="#encyclopedia" class="hero-btn">
-                        Explore Cat Breeds
-                    </a>
-
-                </div>
-
-                <div class="col-lg-5">
-                    <div class="hero-art">
-                        <img src="assets/cat.jpg" alt="A cat looking at the camera">   
-                    </div>
-                </div>
-
+          <div class="col-lg-5">
+            <div class="hero-art">
+              <img src="assets/cat.jpg" alt="A cat looking at the camera" />
             </div>
-
-            <!-- Website Highlights -->
-            <div class="hero-features">
-
-                <div class="hero-feature">
-                    <h3 id="homeBreedCount">100+</h3>
-                    <p>Cat Breeds to Explore</p>
-                </div>
-
-                <div class="hero-feature">
-                    <h3>Discover</h3>
-                    <p>Breed Origins and Information</p>
-                </div>
-
-                <div class="hero-feature">
-                    <h3>Explore</h3>
-                    <p>Pictures and Breed Details</p>
-                </div>
-
-            </div>
-
+          </div>
         </div>
+
+        <!-- Website Highlights -->
+        <div class="hero-features">
+          <div class="hero-feature">
+            <h3 id="homeBreedCount">100+</h3>
+            <p>Cat Breeds to Explore</p>
+          </div>
+
+          <div class="hero-feature">
+            <h3>Discover</h3>
+            <p>Breed Origins and Information</p>
+          </div>
+
+          <div class="hero-feature">
+            <h3>Explore</h3>
+            <p>Pictures and Breed Details</p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Search Section -->
     <section class="search-section text-center" id="encyclopedia">
-        <div class="container">
+      <div class="container">
+        <h2>Explore the Cat Breeds</h2>
 
-            <h2>Explore the Cat Breeds</h2>
+        <p class="mb-2">Search for a breed and discover more about it.</p>
 
-            <p class="mb-2">
-                Search for a breed and discover more about it.
-            </p>
+        <form class="search-box" id="searchForm">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              id="searchInput"
+              placeholder="Search for a cat breed..."
+              aria-label="Search cat breeds"
+            />
 
-            <form class="search-box" id="searchForm">
-                <div class="input-group">
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="searchInput"
-                        placeholder="Search for a cat breed..."
-                        aria-label="Search cat breeds"
-                    >
+            <button class="btn" type="submit">Search</button>
+          </div>
+        </form>
 
-                    <button class="btn" type="submit">
-                        Search
-                    </button>
-                </div>
-            </form>
+        <button
+          class="btn btn-sm clear-btn mt-3"
+          id="clearSearch"
+          type="button"
+        >
+          Clear Search
+        </button>
 
-            <button class="btn btn-sm clear-btn mt-3" id="clearSearch" type="button">
-                Clear Search
-            </button>
-
-            <p class="small mt-3 mb-0" id="resultCount"></p>
-
-        </div>
+        <p class="small mt-3 mb-0" id="resultCount"></p>
+      </div>
     </section>
 
     <section class="book-container">
-        <div class="book" id="book">
-
-            <div class="message-area">
-                <div>
-                    <div class="spinner-border text-primary mb-3" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-
-                    <h3>Opening Purrpedia...</h3>
-                    <p>Please wait while the cat breeds are being loaded.</p>
-                </div>
+      <div class="book" id="book">
+        <div class="message-area">
+          <div>
+            <div class="spinner-border text-primary mb-3" role="status">
+              <span class="visually-hidden">Loading...</span>
             </div>
 
+            <h3>Opening Purrpedia...</h3>
+            <p>Please wait while the cat breeds are being loaded.</p>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Pagination -->
 
     <!-- About Section -->
     <section class="about-section text-center" id="about">
-        <div class="container">
+      <div class="container">
+        <h2 class="mb-3">About Purrpedia</h2>
 
-            <h2 class="mb-3">About Purrpedia</h2>
+        <p class="about-intro">
+          Purrpedia is an online cat breed encyclopedia designed to help
+          visitors discover and learn more about the different breeds of cats.
+          It provides a convenient way to explore breed information, pictures,
+          origins, and other interesting details about our feline companions.
+        </p>
 
-            <p class="about-intro">
-                Purrpedia is an online cat breed encyclopedia designed to
-                help visitors discover and learn more about the different
-                breeds of cats. It provides a convenient way to explore
-                breed information, pictures, origins, and other interesting
-                details about our feline companions.
-            </p>
+        <!-- About Information Cards -->
+        <div class="row g-4">
+          <!-- Card 1: Website Name -->
+          <div class="col-md-6 col-lg-4">
+            <div class="about-card">
+              <div class="about-icon">🐾</div>
 
-            <!-- About Information Cards -->
-            <div class="row g-4">
+              <h3>Why Purrpedia?</h3>
 
-                <!-- Card 1: Website Name -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="about-card">
-
-                        <div class="about-icon">🐾</div>
-
-                        <h3>Why Purrpedia?</h3>
-
-                        <p>
-                            The name Purrpedia combines the word
-                            "Purr," the familiar sound associated with
-                            cats, and "Encyclopedia," a collection of
-                            organized information.
-
-                            Together, Purrpedia represents a place where
-                            cat lovers and curious visitors can explore
-                            and learn about different cat breeds.
-                        </p>
-
-                    </div>
-                </div>
-
-                <!-- Card 2: Website Purpose -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="about-card">
-
-                        <div class="about-icon">📖</div>
-
-                        <h3>What You Can Find Here</h3>
-
-                        <p>
-                            Purrpedia displays a collection of cat breeds
-                            along with their available information.
-                            Visitors can browse breed names, descriptions,
-                            pictures, origins, and additional details.
-
-                            The website also provides a search feature
-                            to make finding specific cat breeds easier.
-                        </p>
-
-                    </div>
-                </div>
-
-                <!-- Card 3: API Integration -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="about-card">
-
-                        <div class="about-icon">💻</div>
-
-                        <h3>Powered by an API</h3>
-
-                        <p>
-                            Purrpedia uses an Application Programming
-                            Interface (API) to retrieve and display
-                            cat breed information.
-
-                            Instead of manually entering the breed
-                            information, the website requests data
-                            from an external API and presents the
-                            available results to visitors.
-                        </p>
-
-                    </div>
-                </div>
-
+              <p>
+                The name Purrpedia combines the word "Purr," the familiar sound
+                associated with cats, and "Encyclopedia," a collection of
+                organized information. Together, Purrpedia represents a place
+                where cat lovers and curious visitors can explore and learn
+                about different cat breeds.
+              </p>
             </div>
+          </div>
 
-            <!-- API Credits -->
-            <div class="api-credit">
+          <!-- Card 2: Website Purpose -->
+          <div class="col-md-6 col-lg-4">
+            <div class="about-card">
+              <div class="about-icon">📖</div>
 
-                <h3>Special Thanks to The Cat API</h3>
+              <h3>What You Can Find Here</h3>
 
-                <p class="mb-2">
-                    The cat breed information and images displayed
-                    throughout Purrpedia are retrieved from
-                    <strong>The Cat API</strong>.
-                </p>
-
-                <p class="mb-3">
-                    We acknowledge and give credit to The Cat API
-                    as the external data source that makes this
-                    website's cat breed encyclopedia possible.
-                </p>
-
-                <a href="https://thecatapi.com/"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    Visit The Cat API
-                </a>
-
+              <p>
+                Purrpedia displays a collection of cat breeds along with their
+                available information. Visitors can browse breed names,
+                descriptions, pictures, origins, and additional details. The
+                website also provides a search feature to make finding specific
+                cat breeds easier.
+              </p>
             </div>
+          </div>
 
+          <!-- Card 3: API Integration -->
+          <div class="col-md-6 col-lg-4">
+            <div class="about-card">
+              <div class="about-icon">💻</div>
+
+              <h3>Powered by an API</h3>
+
+              <p>
+                Purrpedia uses an Application Programming Interface (API) to
+                retrieve and display cat breed information. Instead of manually
+                entering the breed information, the website requests data from
+                an external API and presents the available results to visitors.
+              </p>
+            </div>
+          </div>
         </div>
+
+        <!-- API Credits -->
+        <div class="api-credit">
+          <h3>Special Thanks to The Cat API</h3>
+
+          <p class="mb-2">
+            The cat breed information and images displayed throughout Purrpedia
+            are retrieved from
+            <strong>The Cat API</strong>.
+          </p>
+
+          <p class="mb-3">
+            We acknowledge and give credit to The Cat API as the external data
+            source that makes this website's cat breed encyclopedia possible.
+          </p>
+
+          <a
+            href="https://thecatapi.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Visit The Cat API
+          </a>
+        </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p class="mb-0">
-            &copy; 2026 Purrpedia | An Encyclopedia of Purrs and Breeds
-        </p>
+      <p class="mb-0">
+        &copy; 2026 Purrpedia | An Encyclopedia of Purrs and Breeds
+      </p>
     </footer>
 
     <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // The Cat API settings
-        const API_KEY = "live_Eh3AGnYZZoXRImiJkU9PwJvabjNMu52rtZdSHkhsdBrtHNjh2cBW3SpXMdkXMk0F";
-        const API_URL = "https://api.thecatapi.com/v1";
+      // The Cat API settings
+      const API_KEY =
+        "live_Eh3AGnYZZoXRImiJkU9PwJvabjNMu52rtZdSHkhsdBrtHNjh2cBW3SpXMdkXMk0F";
+      const API_URL = "https://api.thecatapi.com/v1";
 
-// Get the current page from the URL
-var urlParams = new URLSearchParams(window.location.search);
-var spread = urlParams.get("spread");
+      // Get the current page from the URL
+      var urlParams = new URLSearchParams(window.location.search);
+      var spread = urlParams.get("spread");
 
-spread = spread == null ? 1 : parseInt(spread);
+      spread = spread == null ? 1 : parseInt(spread);
 
-// Variables for breed data and pagination
-var allBreeds = [];
-var filteredBreeds = [];
-var currentPage = spread;
-var breedsPerPage = 6;
-        // DOM Elements
-        var book = document.getElementById("book");
-        var searchForm = document.getElementById("searchForm");
-        var searchInput = document.getElementById("searchInput");
-        var clearSearch = document.getElementById("clearSearch");
-        var previousBtn = document.getElementById("previousBtn");
-        var nextBtn = document.getElementById("nextBtn");
-        var pageInfo = document.getElementById("pageInfo");
-        var resultCount = document.getElementById("resultCount");
+      // Variables for breed data and pagination
+      var allBreeds = [];
+      var filteredBreeds = [];
+      var currentPage = spread;
+      var breedsPerPage = 6;
+      // DOM Elements
+      var book = document.getElementById("book");
+      var searchForm = document.getElementById("searchForm");
+      var searchInput = document.getElementById("searchInput");
+      var clearSearch = document.getElementById("clearSearch");
+      var previousBtn = document.getElementById("previousBtn");
+      var nextBtn = document.getElementById("nextBtn");
+      var pageInfo = document.getElementById("pageInfo");
+      var resultCount = document.getElementById("resultCount");
 
-        // Function for API request headers
-function getHeaders() {
-    return {
-        "x-api-key": API_KEY
-    };
-}
+      // Function for API request headers
+      function getHeaders() {
+        return {
+          "x-api-key": API_KEY,
+        };
+      }
 
-        // Function to load all cat breeds
-        async function loadBreeds() {
-            try {
-                var response = await fetch(
-                    API_URL + "/breeds?limit=100&page=0",
-                    {
-                        headers: getHeaders()
-                    }
-                );
+      // Function to load all cat breeds
+      async function loadBreeds() {
+        try {
+          var response = await fetch(API_URL + "/breeds?limit=100&page=0", {
+            headers: getHeaders(),
+          });
 
-                if (!response.ok) {
-                    throw new Error("HTTP " + response.status);
-                }
+          if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+          }
 
-                allBreeds = await response.json();
-                // Update the breed count displayed on the Home section
-document.getElementById("homeBreedCount").textContent =
-    allBreeds.length;
+          allBreeds = await response.json();
+          // Update the breed count displayed on the Home section
+          document.getElementById("homeBreedCount").textContent =
+            allBreeds.length;
 
-filteredBreeds = allBreeds;
+          filteredBreeds = allBreeds;
 
-// Check if the requested page exists
-var totalPages = Math.ceil(filteredBreeds.length / breedsPerPage);
+          // Check if the requested page exists
+          var totalPages = Math.ceil(filteredBreeds.length / breedsPerPage);
 
-if (currentPage < 1 || currentPage > totalPages || isNaN(currentPage)) {
-    currentPage = 1;
-}
+          if (
+            currentPage < 1 ||
+            currentPage > totalPages ||
+            isNaN(currentPage)
+          ) {
+            currentPage = 1;
+          }
 
-displayBreeds();
-
-            } catch (error) {
-                book.innerHTML = `
+          displayBreeds();
+        } catch (error) {
+          book.innerHTML = `
                     <div class="message-area">
                         <div>
                             <h3>Unable to Open the Encyclopedia</h3>
@@ -934,39 +1061,37 @@ displayBreeds();
                     </div>
                 `;
 
-                resultCount.textContent = "Unable to load cat breeds.";
-            }
+          resultCount.textContent = "Unable to load cat breeds.";
         }
+      }
 
-     
-// Function to display breeds
-function displayBreeds() {
+      // Function to display breeds
+      function displayBreeds() {
+        // Calculate the starting and ending index
+        var startIndex = (currentPage - 1) * breedsPerPage;
+        var endIndex = startIndex + breedsPerPage;
 
-    // Calculate the starting and ending index
-    var startIndex = (currentPage - 1) * breedsPerPage;
-    var endIndex = startIndex + breedsPerPage;
+        var currentBreeds = filteredBreeds.slice(startIndex, endIndex);
 
-    var currentBreeds = filteredBreeds.slice(startIndex, endIndex);
+        // Separate the breeds for the left and right pages
+        var leftBreeds = currentBreeds.slice(0, 3);
+        var rightBreeds = currentBreeds.slice(3, 6);
 
-    // Separate the breeds for the left and right pages
-    var leftBreeds = currentBreeds.slice(0, 3);
-    var rightBreeds = currentBreeds.slice(3, 6);
+        // Generate the HTML for both pages
+        var leftHTML = "";
+        var rightHTML = "";
 
-    // Generate the HTML for both pages
-    var leftHTML = "";
-    var rightHTML = "";
+        leftBreeds.forEach(function (breed) {
+          leftHTML += createBreedEntry(breed);
+        });
 
-    leftBreeds.forEach(function(breed) {
-        leftHTML += createBreedEntry(breed);
-    });
+        rightBreeds.forEach(function (breed) {
+          rightHTML += createBreedEntry(breed);
+        });
 
-    rightBreeds.forEach(function(breed) {
-        rightHTML += createBreedEntry(breed);
-    });
-
-    // Display the book pages and pagination
-    book.innerHTML = `
-<div class="book-page left-page" data-page="${(currentPage * 2) - 1}">
+        // Display the book pages and pagination
+        book.innerHTML = `
+<div class="book-page left-page" data-page="${currentPage * 2 - 1}">
     ${leftHTML}
 </div>
 
@@ -994,30 +1119,28 @@ function displayBreeds() {
         </div>
     `;
 
-    updatePagination();
-}
+        updatePagination();
+      }
 
+      // Function to create an individual breed entry
+      function createBreedEntry(breed) {
+        var imageURL = "";
 
-// Function to create an individual breed entry
-function createBreedEntry(breed) {
+        if (breed.image && breed.image.url) {
+          imageURL = breed.image.url;
+        } else {
+          imageURL = "https://placehold.co/300x300?text=No+Image";
+        }
 
-    var imageURL = "";
+        var description = breed.description || "No description available.";
+        var origin = breed.origin || "Unknown";
 
-    if (breed.image && breed.image.url) {
-        imageURL = breed.image.url;
-    } else {
-        imageURL = "https://placehold.co/300x300?text=No+Image";
-    }
+        // Keep the description short on the book pages
+        if (description.length > 120) {
+          description = description.substring(0, 120) + "...";
+        }
 
-    var description = breed.description || "No description available.";
-    var origin = breed.origin || "Unknown";
-
-    // Keep the description short on the book pages
-    if (description.length > 120) {
-        description = description.substring(0, 120) + "...";
-    }
-
-    return `
+        return `
         <div class="breed-entry">
 
             <img
@@ -1039,7 +1162,9 @@ function createBreedEntry(breed) {
                 </p>
 
                 <a
-                   href="view.html?id=${encodeURIComponent(breed.id)}&spread=${currentPage}"
+                   href="view.html?id=${encodeURIComponent(
+                     breed.id
+                   )}&spread=${currentPage}"
                     class="view-btn"
                 >
                     View Details
@@ -1049,116 +1174,104 @@ function createBreedEntry(breed) {
 
         </div>
     `;
-}
-        // Function to prevent HTML characters from being interpreted as markup
-        function escapeHTML(value) {
-            return String(value).replace(/[&<>"']/g, function(character) {
-                return {
-                    "&": "&amp;",
-                    "<": "&lt;",
-                    ">": "&gt;",
-                    '"': "&quot;",
-                    "'": "&#39;"
-                }[character];
-            });
+      }
+      // Function to prevent HTML characters from being interpreted as markup
+      function escapeHTML(value) {
+        return String(value).replace(/[&<>"']/g, function (character) {
+          return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;",
+          }[character];
+        });
+      }
+
+      // Function to update pagination
+      function updatePagination() {
+        var totalPages = Math.ceil(filteredBreeds.length / breedsPerPage);
+
+        if (totalPages < 1) {
+          totalPages = 1;
         }
 
-// Function to update pagination
-function updatePagination() {
+        //  pagination elements
+        var previousBtn = document.getElementById("previousBtn");
+        var nextBtn = document.getElementById("nextBtn");
+        var pageInfo = document.getElementById("pageInfo");
 
-    var totalPages = Math.ceil(filteredBreeds.length / breedsPerPage);
+        // Update page information
+        pageInfo.textContent = "Spread " + currentPage + " of " + totalPages;
 
-    if (totalPages < 1) {
-        totalPages = 1;
-    }
+        // Update search result count
+        resultCount.textContent =
+          filteredBreeds.length + " cat breed(s) found.";
+      }
+      // Function to search cat breeds
+      function searchBreeds(searchText) {
+        var searchValue = searchText.toLowerCase().trim();
 
-    //  pagination elements
-    var previousBtn = document.getElementById("previousBtn");
-    var nextBtn = document.getElementById("nextBtn");
-    var pageInfo = document.getElementById("pageInfo");
+        filteredBreeds = allBreeds.filter(function (breed) {
+          var name = breed.name || "";
+          var description = breed.description || "";
+          var origin = breed.origin || "";
 
-    // Update page information
-    pageInfo.textContent = "Spread " + currentPage + " of " + totalPages;
-
-    // Update search result count
-    resultCount.textContent =
-        filteredBreeds.length + " cat breed(s) found.";
-}
-        // Function to search cat breeds
-        function searchBreeds(searchText) {
-
-            var searchValue = searchText.toLowerCase().trim();
-
-            filteredBreeds = allBreeds.filter(function(breed) {
-
-                var name = breed.name || "";
-                var description = breed.description || "";
-                var origin = breed.origin || "";
-
-                return (
-                    name.toLowerCase().includes(searchValue) ||
-                    description.toLowerCase().includes(searchValue) ||
-                    origin.toLowerCase().includes(searchValue)
-                );
-            });
-
-            // Return to the first page after searching
-            currentPage = 1;
-
-            displayBreeds();
-        }
-
-        // Search form event
-        searchForm.addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            searchBreeds(searchInput.value);
+          return (
+            name.toLowerCase().includes(searchValue) ||
+            description.toLowerCase().includes(searchValue) ||
+            origin.toLowerCase().includes(searchValue)
+          );
         });
 
-        // Clear search event
-        clearSearch.addEventListener("click", function() {
+        // Return to the first page after searching
+        currentPage = 1;
 
-            searchInput.value = "";
+        displayBreeds();
+      }
 
-            filteredBreeds = allBreeds;
-            currentPage = 1;
+      // Search form event
+      searchForm.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-            displayBreeds();
-        });
+        searchBreeds(searchInput.value);
+      });
 
-      
-// Previous and Next page events
-book.addEventListener("click", function(event) {
+      // Clear search event
+      clearSearch.addEventListener("click", function () {
+        searchInput.value = "";
 
-    var totalPages = Math.ceil(filteredBreeds.length / breedsPerPage);
+        filteredBreeds = allBreeds;
+        currentPage = 1;
 
-    if (event.target.closest("#previousBtn")) {
+        displayBreeds();
+      });
 
-        currentPage -= 1;
+      // Previous and Next page events
+      book.addEventListener("click", function (event) {
+        var totalPages = Math.ceil(filteredBreeds.length / breedsPerPage);
 
-        if (currentPage == 0) {
+        if (event.target.closest("#previousBtn")) {
+          currentPage -= 1;
+
+          if (currentPage == 0) {
             currentPage = totalPages;
-        }
+          }
 
-        displayBreeds();
+          displayBreeds();
+        } else if (event.target.closest("#nextBtn")) {
+          currentPage += 1;
 
-    } else if (event.target.closest("#nextBtn")) {
-
-        currentPage += 1;
-
-        if (currentPage > totalPages) {
+          if (currentPage > totalPages) {
             currentPage = 1;
+          }
+
+          displayBreeds();
         }
+      });
 
-        displayBreeds();
-
-    }
-
-});
-
-        // Load the cat breeds 
-        loadBreeds();
+      // Load the cat breeds
+      loadBreeds();
     </script>
-
-</body>
+  </body>
 </html>
